@@ -28,7 +28,7 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_dLSvrU0nNfrwrz40qlDtXx50000X7IfXJA'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG_VALUE')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['free-soul.herokuapp.com']
 
 
 # Application definition

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="mt-5 pt-5">
+    {% if messages %}
+    <div class="container py-5">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-3 m-auto">
+                <h2 class="text-center">Contact Us</h2>
+                <br>
+                <form action="https://formspree.io/mrgeydak" method="POST">
+                    <div class="form-row py-2">
+                        <input type="text" name="name" class="form-control shadow" placeholder="Full Name" style="border-radius: 2rem;">
+                    </div>
+                    <div class="form-row py-2">
+                        <input type="email" name="email" class="form-control shadow" placeholder="Email" style="border-radius: 2rem;">
+                    </div>
+                    <div class="form-row py-2">
+                        <input type="text" name="phone_number" class="form-control shadow" placeholder="Phone Number" style="border-radius: 2rem;">
+                    </div>
+                    <div class="form-row py-2">
+                        <textarea type="text" name="message" class="form-control shadow" placeholder="Message" style="border-radius: 2rem;"></textarea>
+                    </div>
+                    <button class="btn btn-warning shadow" type="submit" style="border-radius: 2rem;">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

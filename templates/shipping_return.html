@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="mt-5 pt-5">
+    {% if messages %}
+    <div class="container py-5">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center">Shipping & Returns</h2>
+                <br>
+                <h6 style="text-decoration: underline;">Shipping</h6>
+                <p>
+                    The rate charged for the shipping of your order 
+                    is based on your location. Before the final 
+                    checkout page you will be shown what the cost of 
+                    shipping will be. We ship by USPS priority mail. 
+                    Please allow 3-7 business days for your order to arrive. 
+                    Orders made Monday-Friday between 9 a.m and 5 p.m EST 
+                    will be shipped within the next business day.
+                </p>
+                <br>
+                <h6 style="text-decoration: underline;">Returns</h6>
+                <p>
+                    Our policy lasts 7 business days from the time your item 
+                    was delivered. To be eligible for a return (refunds and 
+                    store credits), your item must be unused and in the same 
+                    condition that you received it. It must also be in the original 
+                    packaging. Once your return is received and inspected,  you will 
+                    receive an email to notify you that we have received your returned 
+                    item and if it has been approved or denied.You will be responsible 
+                    for paying for your own shipping costs for returning your item. 
+                    Shipping costs are non-refundable. Items purchased under our 
+                    "Last Chance" section do not qualify for exchanges, refunds, or store credits. 
+                </p>
+                <br>
+                <h6 style="text-decoration: underline;">Credit or Debit Card Returns</h6>
+                <p>
+                    If your order was made using a debit or credit card it may 
+                    take up to 10 business day for the credit to show on your account.
+                    <br><br>
+                    Return Address: 10 Hill Street. Newark, NJ 07102 
+                </p>
+                <br>
+                <h6 style="text-decoration: underline;">Initiate a Return</h6>
+                <p>To initiate a return please fill out the return form <a href="{% url 'core:request-refund' %}">here</a></p>
+                <br>
+                <h6 style="text-decoration: underline;">Exchanges</h6>
+                <p>
+                    Due to the timeline for processing an exchange and the limited 
+                    nature of most of our inventory, we don’t offer exchanges. We 
+                    recommend placing a new order for the item you’d like and returning 
+                    your current order for a refund following the steps above.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

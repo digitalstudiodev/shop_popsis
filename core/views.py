@@ -250,18 +250,6 @@ class PaymentView(View):
             try:
 
                 if use_default or save:
-                    stripe.InvoiceItem.create(
-                        amount=amount,
-                        currency='usd',
-                        customer=userprofile.stripe_customer_id,
-                        description=order,
-                    )
-                    invoice = stripe.Invoice.create(
-                        customer=userprofile.stripe_customer_id,
-                        collection_method='send_invoice',
-                        days_until_due=30,
-                    )
-                    invoice.send_invoice()
                     # charge the customer because we cannot charge the token more than once
                     charge = stripe.Charge.create(
                         amount=amount,  # cents
@@ -270,18 +258,6 @@ class PaymentView(View):
                         receipt_email=userprofile.user.email,
                     )
                 else:
-                    stripe.InvoiceItem.create(
-                        amount=amount,
-                        currency='usd',
-                        customer=userprofile.stripe_customer_id,
-                        description=order,
-                    )
-                    invoice = stripe.Invoice.create(
-                        customer=userprofile.stripe_customer_id,
-                        collection_method='send_invoice',
-                        days_until_due=30,
-                    )
-                    invoice.send_invoice()
                     # charge once off on the token
                     charge = stripe.Charge.create(
                         amount=amount,  # cents

@@ -184,7 +184,7 @@
 <!--Charts-->
 <script>
     time = [{% for t in time %}'{{ t }}',{% endfor %}];
-    payment = [{% for p in payment %}{{ p }},{% endfor %}];
+    payment = [{% for p in payment %}${{ p }},{% endfor %}];
 
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {

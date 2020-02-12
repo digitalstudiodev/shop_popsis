@@ -25,8 +25,12 @@
             </li>
             {% endif %}
             <li class="list-group-item d-flex justify-content-between">
+                <span>Tax</span>
+                <strong>${{ order.tax_total }}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
-                <strong>${{ order.get_total }}</strong>
+                <strong>${{ order.get_absolute_total }}</strong>
             </li>
         </ul>
         <!-- Cart -->

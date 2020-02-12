@@ -109,6 +109,17 @@ class Order(models.Model):
         if self.coupon:
             total -= self.coupon.amount
         return total
+    
+    def tax_total(self):
+        tax = 0 
+        tax += (self.get_total() * 0.065)
+        return tax
+
+    def get_absolute_total(self):
+        absolute_total = 0
+        absolute_total += (self.get_total() + self.tax_total())
+        return absolute_total
+
 
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

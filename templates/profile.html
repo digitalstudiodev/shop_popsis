@@ -22,6 +22,10 @@
                     <h6 class="py-5">Personal Info</h6>
                     <h6>Username&nbsp;&nbsp;&nbsp;<span style="font-size: small;">{{ user.user.username }}</span></h6>
                     <h6>Email&nbsp;&nbsp;&nbsp;<span style="font-size: small;">{{ user.user.email }}</span></h6>
+                    {% if request.user.is_superuser %}
+                    <br><br>
+                    <a href="{% url 'core:dashboard' %}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">Admin Dashboard</a>
+                    {% endif %}
                 </div>
                 <div class="col-lg-6">
                     <form method="POST" enctype="multipart/form-data">

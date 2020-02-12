@@ -248,7 +248,6 @@ class PaymentView(View):
             amount = int(order.get_total() * 100)
 
             try:
-
                 if use_default or save:
                     # charge the customer because we cannot charge the token more than once
                     charge = stripe.Charge.create(
@@ -274,7 +273,6 @@ class PaymentView(View):
                 payment.save()
 
                 # assign the payment to the order
-
                 order_items = order.items.all()
                 order_items.update(ordered=True)
                 for item in order_items:
@@ -599,3 +597,19 @@ def user_profile(request):
     }
     return render(request, 'profile.html', context)
 
+@login_required
+def dashboard(request):
+    time = []
+    payment = []
+    for order in Order.objects.all().order_by('ordered_date'):
+        time.append(order.ordered_date.strftime("%m/%d/%Y"))
+    for order in Order.objects.all().order_by('ordered_date'):
+        payment.append(order.payment.amount)
+    
+    context = {
+        'items': Item.objects.all(),
+        'orders': Order.objects.all(),
+        'time': time,
+        'payment': payment,
+    }
+    return render(request, 'dashboard.html', context)

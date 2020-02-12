@@ -18,7 +18,8 @@ from .views import (
     privacy_policy,
     terms_use,
     about_us,
-    contact
+    contact,
+    dashboard
     )
 
 app_name = 'core'
@@ -44,4 +45,5 @@ urlpatterns = [
     path('terms-use/', terms_use, name='terms-use'),
     path('about-us/', about_us, name='about-us'),
     path('contact/', contact, name='contact'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]

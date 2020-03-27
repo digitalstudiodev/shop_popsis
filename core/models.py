@@ -1,10 +1,9 @@
-from django.db.models.signals import post_save
 from django.conf import settings
 from django.db import models
 from django.db.models import Sum
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
-from django.contrib.auth.models import User
+from users.models import User, Profile
 
 # Create your models here.
 CATEGORY_CHOICES = (
@@ -21,14 +20,6 @@ ADDRESS_CHOICES = (
     ('B', 'Billing'),
     ('S','Shipping'),
 )
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
-    one_click_purchasing = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.username
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
@@ -58,7 +49,7 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={'slug': self.slug})
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)  
     quantity = models.IntegerField(default=1)  
@@ -81,7 +72,7 @@ class OrderItem(models.Model):
         return self.get_total_item_price()
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     ref_code = models.CharField(max_length=20, default='')
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
@@ -122,7 +113,7 @@ class Order(models.Model):
 
 
 class Address(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=500)
     apartment_address = models.CharField(max_length=500)
     country = CountryField(multiple=False)
@@ -131,7 +122,7 @@ class Address(models.Model):
     default = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
     
     class Meta:
         verbose_name_plural = 'Addresses'
@@ -139,12 +130,12 @@ class Address(models.Model):
 
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     amount = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 class Coupon(models.Model):
@@ -162,9 +153,3 @@ class Refund(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
-
-def userprofile_receiver(sender, instance, created, *args, **kwargs):
-    if created:
-        userprofile = UserProfile.objects.create(user=instance)
-
-post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)

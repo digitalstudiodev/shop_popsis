@@ -44,16 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     ##Core App
     'core',
-    ##Django All Auth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     ##Crispy Forms
     'crispy_forms',
     ##Django Countries
     'django_countries',
     ##Storages
-    'storages'
+    'storages',
+    'users'
 
 ]
 
@@ -152,6 +149,7 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+AUTH_USER_MODEL = 'users.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

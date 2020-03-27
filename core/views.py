@@ -7,14 +7,11 @@ from django.shortcuts import render, get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, UserUpdateForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
-
-
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund
+from users.models import User, Profile
 import random
 import string
-
 import stripe
-stripe.api_key = "sk_test_1urOXpov4gzc2jvRS5e8Kji0007sPxQtEM" #settings.STRIPE_SECRET_KEY
 
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -204,7 +201,7 @@ class PaymentView(View):
                 'order': order,
                 'DISPLAY_COUPON_FORM': False
             }
-            userprofile = self.request.user.userprofile
+            userprofile = self.request.user.profile
             if userprofile.one_click_purchasing:
                 # fetch the users card list
                 cards = stripe.Customer.list_sources(
@@ -227,7 +224,7 @@ class PaymentView(View):
     def post(self, *args, **kwargs):
         order = Order.objects.get(user=self.request.user, ordered=False)
         form = PaymentForm(self.request.POST)
-        userprofile = UserProfile.objects.get(user=self.request.user)
+        userprofile = Profile.objects.get(user=self.request.user)
         if form.is_valid():
             token = form.cleaned_data.get('stripeToken')
             save = form.cleaned_data.get('save')
@@ -254,7 +251,7 @@ class PaymentView(View):
                         amount=amount,  # cents
                         currency="usd",
                         customer=userprofile.stripe_customer_id,
-                        receipt_email=userprofile.user.email,
+                        receipt_email=self.request.user.email,
                     )
                 else:
                     # charge once off on the token
@@ -262,7 +259,7 @@ class PaymentView(View):
                         amount=amount,  # cents
                         currency="usd",
                         source=token,
-                        receipt_email=userprofile.user.email,
+                        receipt_email=self.request.user.email,
                     )
 
                 # create the payment
@@ -577,25 +574,6 @@ def about_us(request):
 
 def contact(request):
     return render(request, 'contact.html')
-
-@login_required
-def user_profile(request):
-    if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-
-        if u_form.is_valid():
-            u_form.save()
-            messages.success(request, f'Your account has been updated!')
-            return redirect('core:user-profile')
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-
-    context = {
-        'u_form': u_form,
-        'user': UserProfile.objects.filter(user=request.user)[0],
-        'order_history': Order.objects.filter(user=request.user)
-    }
-    return render(request, 'profile.html', context)
 
 @login_required
 def dashboard(request):

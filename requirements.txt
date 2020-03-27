@@ -9,6 +9,7 @@ backcall==0.1.0
 beautifulsoup4==4.7.1
 bleach==3.1.0
 blessed==1.15.0
+boto==2.49.0
 boto3==1.9.188
 botocore==1.12.188
 cached-property==1.5.1

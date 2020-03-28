@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="py-5">Item</h1>
-                <form method="POST" class="uniForm">
+                <form method="POST" class="uniForm" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset class="form-group">
                         {{ form|crispy }}

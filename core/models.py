@@ -7,9 +7,9 @@ from users.models import User, Profile
 
 # Create your models here.
 CATEGORY_CHOICES = (
-    ('S', 'Shirt'),
-    ('SW','Sport Wear'),
-    ('OW','Outwear')
+    ('1','Sale'),
+    ('2','Limited'),
+    ('3','Extreme Sale')
 )
 LABEL_CHOICES = (
     ('P', 'primary'),
@@ -22,18 +22,18 @@ ADDRESS_CHOICES = (
 )
 
 class Item(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, verbose_name="Item Name")
     price = models.FloatField()
-    discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2, default="")
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1, default="")
-    slug = models.SlugField(default="")
+    discount_price = models.FloatField(blank=True, null=True, verbose_name="Discounted Price")
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2, null=True, blank=True)
+    label = models.CharField(choices=LABEL_CHOICES, max_length=1, default="", verbose_name="Labeled Color")
+    slug = models.SlugField(default="", verbose_name="Item Tag", help_text="This text will be used in url. Please use following format: Item-Name-Tag")
     description = models.TextField(default="")
-    additional_info = models.TextField(default="")
-    image = models.ImageField(blank=True, null=True)
-    image_sub_one = models.ImageField(blank=True, null=True)
-    image_sub_two = models.ImageField(blank=True, null=True)
-    image_sub_three = models.ImageField(blank=True, null=True)
+    additional_info = models.TextField(default="", verbose_name="Additional Info")
+    image = models.ImageField(blank=False, null=False, verbose_name="Main Image", default="default.png")
+    image_sub_one = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png")
+    image_sub_two = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png")
+    image_sub_three = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png")
     inventory = models.FloatField(default=1)
 
     def __str__(self):

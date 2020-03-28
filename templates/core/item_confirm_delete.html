@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<main class="mt-5 pt-5">
+    {% if messages %}
+    <div class="container py-5">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="py-5">Delete Item</h1>
+                <form method="POST" class="uniForm">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Are you sure you want to delete the following item:</legend>
+                        <h2>{{ object.title }}</h2>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-danger" style="border-radius: 2rem;" type="submit">Yes, Delete</button>
+                        <a class="btn btn-lg btn-warning" style="border-radius: 2rem;" href="{% url 'core:product' object.slug %}">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

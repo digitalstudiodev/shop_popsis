@@ -1,7 +1,8 @@
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from django.contrib.auth.models import User
+from users.models import User
+from .models import Item
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
@@ -63,4 +64,4 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['email']

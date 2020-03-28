@@ -16,7 +16,7 @@
     {% endif %}
     <div class="container py-5">
         <h2 class="text-center">Admin Dashboard</h2>
-        <h3>Inventory</h3>
+        <h3 class="mb-5">Inventory</h3>
         <div class="row">
             {% for item in items %}
             <div class="col-lg-3">
@@ -55,6 +55,9 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
+        <div class="row">
+            <a href="{% url 'core:item-create' %}" class="btn btn-lg btn-warning my-5" style="border-radius: 2rem;">Add New Item</a>
         </div>
         <hr>
         <h3>Metrics</h3>

@@ -18,7 +18,10 @@ from .views import (
     terms_use,
     about_us,
     contact,
-    dashboard
+    dashboard,
+    ItemCreateView,
+    ItemUpdateView, 
+    ItemDeleteView
     )
 
 app_name = 'core'
@@ -43,4 +46,7 @@ urlpatterns = [
     path('about-us/', about_us, name='about-us'),
     path('contact/', contact, name='contact'),
     path('dashboard/', dashboard, name='dashboard'),
+    path('item/new/', ItemCreateView.as_view(), name='item-create'),
+    path('item/<int:pk>/update', ItemUpdateView.as_view(), name='item-update'),
+    path('item/<int:pk>/delete', ItemDeleteView.as_view(), name='item-delete'),
 ]

@@ -59,7 +59,10 @@
               &nbsp;&nbsp;
               {{ object.description }}
             </p>
-
+            {% if request.user.is_superuser %}
+            <a href="{% url 'core:item-update' object.id %}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">Update</a>
+            <a href="{% url 'core:item-delete' object.id %}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">Delete</a>
+            {% endif %}
             <!-- Add to cart button -->
             <a href="{{ object.get_add_to_cart_url }}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">
                 Add to cart

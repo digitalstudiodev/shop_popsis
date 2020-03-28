@@ -1,10 +1,11 @@
-from django.conf import settings
+from django.conf import settings as settings
+from django.urls import reverse
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect, render
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View,CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, UserUpdateForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund
@@ -12,6 +13,7 @@ from users.models import User, Profile
 import random
 import string
 import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -242,7 +244,7 @@ class PaymentView(View):
                     userprofile.one_click_purchasing = True
                     userprofile.save()
 
-            amount = int(order.get_absolute_total() * 100)
+            amount = round(int(order.get_absolute_total() * 100))
 
             try:
                 if use_default or save:
@@ -281,7 +283,7 @@ class PaymentView(View):
                 order.save()
 
                 messages.success(self.request, "Your order was successful!")
-                return redirect("/")
+                return redirect("users:profile")
 
             except stripe.error.CardError as e:
                 body = e.json_body
@@ -353,7 +355,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
-            return redirect("/")
+            return redirect("core:shop")
 
 class ItemDetailView(DetailView):
     model = Item
@@ -591,3 +593,43 @@ def dashboard(request):
         'payment': payment,
     }
     return render(request, 'dashboard.html', context)
+
+class ItemCreateView(LoginRequiredMixin, CreateView):
+    model = Item
+    fields = [
+        'title', 'price', 'discount_price', 'category', 'label',
+        'slug', 'description', 'additional_info', 'image', 'image_sub_one',
+        'image_sub_two', 'image_sub_three', 'inventory'
+    ]
+
+    def form_valid(self, form):
+        messages.success(self.request, f'You have successfully added a new item')
+        return super().form_valid(form)
+
+class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Item
+    fields = [
+        'title', 'price', 'discount_price', 'category', 'label',
+        'slug', 'description', 'additional_info', 'image', 'image_sub_one',
+        'image_sub_two', 'image_sub_three', 'inventory'
+    ]
+
+    def form_valid(self, form):
+        messages.success(self.request, f'You have successfully updated the item')
+        return super().form_valid(form)
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_superuser:
+            return True
+        return False
+
+class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Item
+    success_url = '/'
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_superuser:
+            return True
+        return False

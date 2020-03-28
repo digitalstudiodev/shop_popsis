@@ -30,10 +30,10 @@ class Item(models.Model):
     slug = models.SlugField(default="", verbose_name="Item Tag", help_text="This text will be used in url. Please use following format: Item-Name-Tag")
     description = models.TextField(default="")
     additional_info = models.TextField(default="", verbose_name="Additional Info")
-    image = models.ImageField(blank=False, null=False, verbose_name="Main Image", default="default.png")
-    image_sub_one = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png")
-    image_sub_two = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png")
-    image_sub_three = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png")
+    image = models.ImageField(blank=False, null=False, verbose_name="Main Image", default="default.png", upload_to='item_pics')
+    image_sub_one = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png", upload_to='item_pics')
+    image_sub_two = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png", upload_to='item_pics')
+    image_sub_three = models.ImageField(blank=False, null=False, verbose_name="Sub Image", default="default.png", upload_to='item_pics')
     inventory = models.FloatField(default=1)
 
     def __str__(self):

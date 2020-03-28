@@ -16,8 +16,8 @@
   <li><a href="https://www.chartjs.org/">Chart.js</a></li>
 </ol>
 
-## Storage
+### Storage
 AWS S3
 
-## Deployment
+### Deployment
 Heroku

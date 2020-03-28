@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'django_countries',
     ##Storages
     'storages',
-    'users'
+    'users.apps.UsersConfig'
 
 ]
 

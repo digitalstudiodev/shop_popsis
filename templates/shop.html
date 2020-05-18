@@ -68,7 +68,7 @@
             {% for item in object_list %}
             <div class="col-lg-3 col-sm-6 mb-4">
                 <div class="card h-100">
-                  <a href="{{ item.get_absolute_url }}"><img class="card-img-top" src="{{ item.image.url }}" alt="Product Image"></a>
+                  <a href="{{ item.get_absolute_url }}"><img class="card-img-top" height="50%" src="{{ item.image.url }}" alt="Product Image"></a>
                   <div class="card-body text-center">
                     <a href="{{ item.get_absolute_url }}" class="grey-text">
                       <h5>{{ item.get_category_display }}</h5>

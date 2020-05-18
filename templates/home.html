@@ -9,6 +9,17 @@
       height: 60vh;
     }
 
+    @media (min-width: 400px) {
+      .hide{
+        position: absolute;
+        width: 20%;
+        padding: 10px;
+        text-align: center;
+        bottom: 30%;
+        left: 30%;
+      }
+    }
+
     @media (max-width: 740px) {
 
       html,
@@ -29,15 +40,14 @@
       }
     }
     .carousel-item {
-  height: 65vh;
-  min-height: 350px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
+      height: 65vh;
+      min-height: 350px;
+      background: no-repeat center center scroll;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
   </style>
 {% endblock head %}
 
@@ -107,7 +117,7 @@
   <div class="container" style="position: relative;">
     <div class="col-12 py-5">
       <img src="{% static 'img/main_four.jpg' %}" class="img-fluid rounded shadow d-block" />
-      <div class="bg-white rounded shadow" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">
+      <div class="bg-white rounded shadow hide" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">
         <h3 class="">Spring Sale</h3>
         <p class="lead">For now & later from $7.99</p>
       </div>

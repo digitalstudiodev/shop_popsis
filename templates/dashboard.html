@@ -60,22 +60,6 @@
             <a href="{% url 'core:item-create' %}" class="btn btn-lg btn-warning my-5" style="border-radius: 2rem;">Add New Item</a>
         </div>
         <hr>
-        <h3>Metrics</h3>
-        <div class="row">
-            <!-- Date v Payment -->
-            <div class="col-xl-12 col-lg-12">
-                <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Order Payments</h6>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="myChart" width="400" height="200"></canvas>
-                            <div id="date-payment"></div>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <hr>
         <h3>Orders</h3>
         <div class="row">
             <div class="card shadow mb-4">
@@ -109,6 +93,10 @@
                                     <th>Payment</th>
                                     <th>Billing Address</th>
                                     <th>Shipping Address</th>
+                                    <th>Refund Requested</th>
+                                    <th>Refund Granted</th>
+                                    <th>Being Delievered</th>
+                                    <th>Received</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -133,6 +121,10 @@
                                         {{ order.shipping_address.street_address }} {{ order.shipping_address.apartment_address }},
                                         {{ order.shipping_address.zip_code }}, {{ order.shipping_address.country }}
                                     </td>
+                                    <td>{{ order.refund_requested }}</td>
+                                    <td>{{ order.refund_granted }}</td>
+                                    <td>{{ order.being_delievered }}</td>
+                                    <td>{{ order.received }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

@@ -16,30 +16,31 @@
     {% endif %}
     <div class="container py-5">
         <h2 class="text-center">My Account</h2>
-        <div class="row">
-            <div class="col-lg-12 d-flex py-5">
-                <div class="col-lg-6">
+        <div class="row text-center py-5">
+                <div class="col-lg-9 m-auto">
                     <h6>Email&nbsp;&nbsp;&nbsp;<span style="font-size: small;">{{ user.email }}</span></h6>
                     {% if request.user.is_superuser %}
                     <br><br>
                     <a href="{% url 'core:dashboard' %}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">Admin Dashboard</a>
                     {% endif %}
+                    <hr>
+                    <div class="row">
+                        <div class="col-4 m-auto">
+                            <form method="POST" enctype="multipart/form-data">
+                                {%  csrf_token %}
+                                <div class="form-row">
+                                    <h6>Update Profile Information</h6>
+                                </div>
+                                <div class="form-row">
+                                    {{ u_form|crispy }}
+                                </div>
+                                <div class="form-row">
+                                    <button class="btn btn-lg btn-warning m-auto" style="border-radius: 2rem;" type="submit">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <form method="POST" enctype="multipart/form-data">
-                        {%  csrf_token %}
-                        <div class="form-row">
-                            <h6>Update Profile Information</h6>
-                        </div>
-                        <div class="form-row">
-                            {{ u_form|crispy }}
-                        </div>
-                        <div class="form-row">
-                            <button class="btn btn-lg btn-warning" style="border-radius: 2rem;" type="submit">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
         <hr>
         <div class="row">

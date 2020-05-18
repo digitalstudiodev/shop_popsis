@@ -21,7 +21,9 @@ from .views import (
     dashboard,
     ItemCreateView,
     ItemUpdateView, 
-    ItemDeleteView,  
+    ItemDeleteView, 
+    LimitedView,
+    ExtremeSaleView, 
     new_base,
     home
     )
@@ -33,6 +35,8 @@ urlpatterns = [
     path('', home, name='home'),
     path('shop/', ShopView.as_view(), name='shop'),
     path('last-chance/', SaleView.as_view(), name='last-chance'),
+    path('limited/', LimitedView.as_view(), name='limited'),
+    path('extreme-sale/', ExtremeSaleView.as_view(), name='extreme-sale'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
     path('product/<slug>/', ItemDetailView.as_view(), name='product'),

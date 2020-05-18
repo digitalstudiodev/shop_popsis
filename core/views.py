@@ -350,6 +350,16 @@ class SaleView(ListView):
     paginate_by = 10
     template_name = "sale.html"
 
+class LimitedView(ListView):
+    model = Item
+    paginate_by = 10
+    template_name = "limited.html"
+    
+class ExtremeSaleView(ListView):
+    model = Item
+    paginate_by = 10
+    template_name = "extreme_sale.html"
+
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:

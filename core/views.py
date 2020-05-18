@@ -354,7 +354,7 @@ class LimitedView(ListView):
     model = Item
     paginate_by = 10
     template_name = "limited.html"
-    
+
 class ExtremeSaleView(ListView):
     model = Item
     paginate_by = 10

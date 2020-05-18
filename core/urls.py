@@ -25,7 +25,7 @@ from .views import (
     LimitedView,
     ExtremeSaleView, 
     new_base,
-    home
+    home,
     )
 
 app_name = 'core'

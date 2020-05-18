@@ -21,13 +21,10 @@
                 {% if object.items.all %}
                     <h6>Refernce Code: {{ object.ref_code }}</h6>
                     <h6>Date: {{ object.ordered_date }}</h6>
+                    <h6>Taxes: ${{ object.tax_total }}</h6>
+                    <h6>Total Price: ${{ object.get_absolute_total }}</h6>
                     {% if object.coupon %}
-                        <h6 class="mb-5">Taxes: ${{ object.tax_total }}</h6>
-                        <h6>Total Price: ${{ object.get_absolute_total }}</h6>
                         <h6 class="mb-5">Coupon Applied: {{ object.coupon.code }} ~ ${{ object.coupon.amount }}</h6>
-                    {% else %}
-                        <h6 class="mb-5">Taxes: ${{ object.tax_total }}</h6>
-                        <h6 class="mb-5">Total Price: ${{ object.get_absolute_total }}</h6>
                     {% endif %}
 
                     <h6>Shipping Address: {{ object.shipping_address.street_address }} {{ object.shipping_address.apartment_address }}, {{ object.shipping_address.country }}, {{ object.shipping_address.zip_code }}</h6>

@@ -21,13 +21,16 @@ from .views import (
     dashboard,
     ItemCreateView,
     ItemUpdateView, 
-    ItemDeleteView
+    ItemDeleteView,  
+    new_base,
+    home
     )
 
 app_name = 'core'
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    #path('', HomeView.as_view(), name='home'),
+    path('', home, name='home'),
     path('shop/', ShopView.as_view(), name='shop'),
     path('last-chance/', SaleView.as_view(), name='last-chance'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
@@ -49,4 +52,5 @@ urlpatterns = [
     path('item/new/', ItemCreateView.as_view(), name='item-create'),
     path('item/<int:pk>/update', ItemUpdateView.as_view(), name='item-update'),
     path('item/<int:pk>/delete', ItemDeleteView.as_view(), name='item-delete'),
+    path('base/', new_base, name='base'),
 ]

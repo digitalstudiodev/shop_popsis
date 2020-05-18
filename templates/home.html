@@ -28,58 +28,61 @@
         height: 100vh;
       }
     }
+    .carousel-item {
+  height: 65vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
   </style>
 {% endblock head %}
 
 {% block content %}
-<!-- Slideshow -->
-<div id="carousel-example-1z" class="carousel slide carousel-fade mt-0 pt-0" data-ride="carousel">
-
-    <!-- Indicators -->
+<header>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-      <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-      <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
-    <!-- End Indicators -->
-
-    <!-- Slides -->
     <div class="carousel-inner" role="listbox">
-      <!--First slide-->
-      <div class="carousel-item active">
-        <div class="view" style="background-image: url({% static 'img/cover_one.jpeg' %}); background-repeat: no-repeat; background-size: cover;">
+      <!-- Slide One - Set the background image for this slide in the line below -->
+      <div class="carousel-item active" style="background-image: url({% static 'img/main.jpg' %})">
+        <div class="carousel-caption d-none d-md-block">
+          <!--<h3 class="display-4">First Slide</h3>
+          <p class="lead">This is a description for the first slide.</p>-->
         </div>
       </div>
-
-      <!--Second slide-->
-      <div class="carousel-item">
-        <div class="view" style="background-image: url({% static 'img/cover_two.jpeg' %}); background-repeat: no-repeat; background-size: cover;">
+      <!-- Slide Two - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url({% static 'img/main_two.jpg' %})">
+        <div class="carousel-caption d-none d-md-block">
+          <!--<h3 class="display-4">Second Slide</h3>
+          <p class="lead">This is a description for the second slide.</p>-->
         </div>
       </div>
-
-      <!--Third slide-->
-      <div class="carousel-item">
-        <div class="view" style="background-image: url({% static 'img/cover_three.jpeg' %}); background-repeat: no-repeat; background-size: cover;">
+      <!-- Slide Three - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url({% static 'img/main_three.jpg' %})">
+        <div class="carousel-caption d-none d-md-block">
+          <!--<h3 class="display-4">Third Slide</h3>
+          <p class="lead">This is a description for the third slide.</p>-->
         </div>
       </div>
     </div>
-    <!-- End Slides -->
-
-    <!-- Controls -->
-    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
     </a>
-    <!-- End Controls -->
-
-</div>
+  </div>
+</header>
 {% if messages %}
-<div class="container py-5">
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
         {{ message }}
@@ -88,172 +91,86 @@
         </button>
     </div>
     {% endfor %}
-</div>
 {% endif %}
-<section class="py-5 align-items-center text-center">
+<section>
+  <div class="container" style="position: relative;">
+    <div class="col-12 py-5">
+      <img src="{% static 'img/poster.jpg' %}" class="img-fluid rounded shadow d-block" />
+      <div class="bg-white rounded shadow" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">
+        <h3 class="">Exclusive</h3>
+        <p class="lead">15% off + extra $10 with code 'YES'</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container" style="position: relative;">
+    <div class="col-12 py-5">
+      <img src="{% static 'img/main_four.jpg' %}" class="img-fluid rounded shadow d-block" />
+      <div class="bg-white rounded shadow" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">
+        <h3 class="">Spring Sale</h3>
+        <p class="lead">For now & later from $7.99</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
   <div class="container">
-    <div class="row py-5">
-      <div class="col-md-7">
-          <img class="img-fluid rounded mb-3 mb-md-0 shadow" src="{% static 'img/bag_main.jpeg' %}" alt="">
-      </div>
-      <div class="col-md-5 mt-auto mb-auto" style="display: table-cell; vertical-align: middle;">
-          <h2 class="my-2">One of a kind</h2>
-          <h4>Hand-crafted bags</h4>
-          <a class="btn btn-lg btn-warning my-5" style="border-radius: 2rem;" href="{% url 'core:shop' %}">Shop Now</a>
-      </div>
-    </div>
-    <div class="row py-5">
-        <div class="col-md-5 mt-auto mb-auto" style="display: table-cell; vertical-align: middle;">
-            <h2 class="my-2">Get up to 20% OFF!</h2>
-            <h4>Just use code: CODE</h4>
-            <a class="btn btn-lg btn-warning my-5" style="border-radius: 2rem;" href="{% url 'core:shop' %}">Shop Now</a>
-        </div>
-        <div class="col-md-7">
-          <img class="img-fluid rounded mb-3 mb-md-0 shadow" src="{% static 'img/sample_bag.jpeg' %}" alt="">
-        </div>
-      </div>
-  </div>
-</section>
-<section class="py-5">
-  <div class="row text-center">
-    <iframe src="https://snapwidget.com/embed/773521" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:100%; height:350px"></iframe>
-  </div>
-</section>
-<section class="py-5">
-    <div class="container text-center">
-        <h2 class="mb-5">What people are saying...</h2>
-        <div class="row d-flex">
-            <div class="col-lg-4">
-                <div class="mx-auto mb-5 mb-lg-0">
-                    <img class="img-fluid rounded-circle mb-3 shadow" src="{% static 'img/test_one.jpeg' %}" width="auto" height="15%" alt="Person 1">
-                    <h5>Michel Brown</h5>
-                    <p class="font-weight-light mb-0">This is fantactic! Thanks so much guys!</p>
-                </div>
+    <div class="row">
+      {% for item in items %}
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card shadow zoom">
+            <div class="view overlay">
+                <img src="{{ item.get_absolute_url }}" class="card-img-top" alt="Product Image">
+                <a href="{{ item.get_absolute_url }}">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
             </div>
-            <div class="col-lg-4">
-                <div class="mx-auto mb-5 mb-lg-0">
-                    <img class="img-fluid rounded-circle mb-3 shadow" src="{% static 'img/test_two.png' %}" width="auto" height="15%" alt="Person 1">
-                    <h5>Crystal Diaz</h5>
-                    <p class="font-weight-light mb-0">This is fantactic! Thanks so much guys!</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="mx-auto mb-5 mb-lg-0">
-                    <img class="img-fluid rounded-circle mb-3 shadow" src="{% static 'img/test_three.jpeg' %}" width="auto" height="15%" alt="Person 1">
-                    <h5>Vivan Patel</h5>
-                    <p class="font-weight-light mb-0">This is fantactic! Thanks so much guys!</p>
-                </div>
+            <div class="card-body text-center">
+                <a href="{{ item.get_absolute_url }}" class="grey-text">
+                    <h5>{{ item.get_category_display }}</h5>
+                </a>
+                <h5>
+                    <strong>
+                                <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                                    {% if item.inventory == 0 %}
+                                        <span class="badge badge-pill {{ item.get_label_display }}-color">Sold Out</span>
+                                    {% elif item.discount_price %}
+                                        <span class="badge badge-pill {{ item.get_label_display }}-color">On Sale</span>
+                                    {% endif %}
+                                </a>
+                    </strong>
+                </h5>
+                <h4 class="font-weight-bold blue-text">
+                            <strong>$ 
+                                {% if item.discount_price  %}
+                                    {{ item.discount_price }} <strike style="font-size: small;">{{ item.price }}</strike>
+                                {% else %}
+                                    {{ item.price }}
+                                {% endif %}
+                            </strong>
+                </h4>
             </div>
         </div>
     </div>
+      {% endfor %}
+    </div>
+  </div>
 </section>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffd700" fill-opacity="1" d="M0,160L48,165.3C96,171,192,181,288,154.7C384,128,480,64,576,80C672,96,768,192,864,240C960,288,1056,288,1152,256C1248,224,1344,160,1392,128L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+<section class="text-center p-5" style="background-color: #ffd700;">
+  <div class="container">
+      <div class="row align-items-center">
+          <div class="col-md-8">
+              <h2 class="text-white mb-5s text-dark">
+                Send a personalized e-gift card & get 10% back!
+              </h2>
+          </div>
+          <div class="col-md-3 m-auto">
+              <a href="{% url 'core:shop' %}" class="btn btn-danger btn-block btn-lg btn-round shadow" style="border-radius: 2rem;">Shop</a>
+          </div>
+      </div>
+  </div>
+</section>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffd700" fill-opacity="1" d="M0,160L48,165.3C96,171,192,181,288,154.7C384,128,480,64,576,80C672,96,768,192,864,240C960,288,1056,288,1152,256C1248,224,1344,160,1392,128L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
 {% endblock content %}
-<!--
-    <div class="container">
-    <section class="text-center mb-4">
-          
-          <div class="row wow fadeIn">
-  
-              {% for item in object_list %}
-              <div class="col-lg-3 col-md-6 mb-4">
-    
-                <div class="card">
-    
-                  <div class="view overlay">
-                    <img src="{{ item.image.url }}" class="card-img-top" alt="Product Image">
-                    <a href="{{ item.get_absolute_url }}">
-                      <div class="mask rgba-white-slight"></div>
-                    </a>
-                  </div>
-    
-                  <div class="card-body text-center">
-                    <a href="{{ item.get_absolute_url }}" class="grey-text">
-                      <h5>{{ item.get_category_display }}</h5>
-                    </a>
-                    <h5>
-                      <strong>
-                        <a href="" class="dark-grey-text">{{ item.title }}
-                          <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
-                        </a>
-                      </strong>
-                    </h5>
-    
-                    <h4 class="font-weight-bold blue-text">
-                      <strong>$ 
-                        {% if item.discount_price  %}
-                          {{ item.discount_price }}
-                        {% else %}
-                          {{ item.price }}
-                        {% endif %}
-                      </strong>
-                    </h4>
-    
-                  </div>
-    
-                </div>
-    
-              </div>
-              {% endfor %}
-    
-            </div>
-    
-      </section>
-      {% if is_paginated %}
-      <nav class="d-flex justify-content-center wow fadeIn">
-            <ul class="pagination pg-blue">
-    
-              {% if page_obj.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page.obj.previous_page_number }}" aria-label="Previous">
-                  Previous
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              {% endif %}
-    
-              <li class="page-item active">
-                <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              {% if page_obj.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                  Next
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-              {% endif %}
-            </ul>
-      </nav>
-      {% endif %}
-    </div>
--->
-<!--
-  <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
-
-      <!-- Content -->
-      <!--<div class="text-center white-text mx-5 wow fadeIn">
-        <h1 class="mb-4">
-          <strong>Beautifully Hand-crafted bags</strong>
-        </h1>
-
-        <p>
-          <strong>Made with high-quality materials</strong>
-        </p>
-
-        <p class="mb-4 d-none d-md-block">
-          <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-            written versions
-            available. Create your own, stunning website.</strong>
-        </p>
-
-        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-          free tutorial
-          <i class="fas fa-graduation-cap ml-2"></i>
-        </a>
-      </div>
-    </div>
--->

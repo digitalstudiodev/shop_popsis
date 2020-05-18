@@ -244,7 +244,7 @@ class PaymentView(View):
                     userprofile.one_click_purchasing = True
                     userprofile.save()
 
-            amount = round(int(order.get_absolute_total() * 100))
+            amount = int(order.get_absolute_total() * 100)
 
             try:
                 if use_default or save:
@@ -329,6 +329,11 @@ class PaymentView(View):
         messages.warning(self.request, "Invalid data received")
         return redirect("/payment/stripe/")
 
+def home(request):
+    context = {
+        'items': Item.objects.all()[:16]
+    }
+    return render(request, "home.html", context)
 
 class HomeView(ListView):
     model = Item
@@ -365,7 +370,7 @@ class OrderDetailView(DetailView):
     model = Order
     template_name = "order_detail.html"
 
-@login_required
+@login_required(login_url='users:login')
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_item, created = OrderItem.objects.get_or_create(
@@ -445,7 +450,7 @@ def add_to_cart(request, slug):
             return redirect("core:product", slug=slug)
 
 
-@login_required
+@login_required(login_url='users:login')
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -472,7 +477,7 @@ def remove_from_cart(request, slug):
         messages.info(request, "You do not have an active order.")
         return redirect("core:product", slug=slug)
 
-@login_required
+@login_required(login_url='users:login')
 def remove_single_item_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
@@ -577,7 +582,7 @@ def about_us(request):
 def contact(request):
     return render(request, 'contact.html')
 
-@login_required
+@login_required(login_url='users:login')
 def dashboard(request):
     time = []
     payment = []
@@ -633,3 +638,7 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user.is_superuser:
             return True
         return False
+
+
+def new_base(request):
+    return render(request, "core/new_base.html")

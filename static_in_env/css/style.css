@@ -6,7 +6,7 @@ body,
 
 /* Half Page Carousel itself*/
 .carousel {
-  height: 75%; }
+  height: 25%; }
   .carousel .carousel-inner {
     height: 100%; }
     .carousel .carousel-inner .carousel-item,

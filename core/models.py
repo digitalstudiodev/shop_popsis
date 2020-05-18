@@ -96,19 +96,19 @@ class Order(models.Model):
     def get_total(self):
         total = 0
         for order_item in self.items.all():
-            total += order_item.get_final_price()
+            total += round(order_item.get_final_price(), 2)
         if self.coupon:
-            total -= self.coupon.amount
+            total -= round(self.coupon.amount, 2)
         return total
     
     def tax_total(self):
         tax = 0 
-        tax += (self.get_total() * 0.065)
+        tax += round((self.get_total() * 0.065), 2)
         return tax
 
     def get_absolute_total(self):
         absolute_total = 0
-        absolute_total += (self.get_total() + self.tax_total())
+        absolute_total += round((self.get_total() + self.tax_total()), 2)
         return absolute_total
 
 

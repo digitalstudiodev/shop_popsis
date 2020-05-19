@@ -382,10 +382,8 @@ class OrderDetailView(DetailView):
 
 class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Order
-    fields = [
-        'items', 
-        'billing_address', 'shipping_address',
-        'refund_requested', 'refund_granted', 'being_delievered', 'received'
+    fields = [ 
+        'refund_granted', 'being_delievered', 'received'
     ]
 
     def form_valid(self, form):

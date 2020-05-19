@@ -380,6 +380,24 @@ class OrderDetailView(DetailView):
     model = Order
     template_name = "order_detail.html"
 
+class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Order
+    fields = [
+        'items', 
+        'billing_address', 'shipping_address',
+        'refund_requested', 'refund_granted', 'being_delievered', 'received'
+    ]
+
+    def form_valid(self, form):
+        messages.success(self.request, f'You have successfully updated the item')
+        return super().form_valid(form)
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_superuser:
+            return True
+        return False
+
 @login_required(login_url='users:login')
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)

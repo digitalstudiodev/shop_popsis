@@ -26,6 +26,7 @@ from .views import (
     ExtremeSaleView, 
     new_base,
     home,
+    OrderUpdateView
     )
 
 app_name = 'core'
@@ -57,4 +58,5 @@ urlpatterns = [
     path('item/<int:pk>/update', ItemUpdateView.as_view(), name='item-update'),
     path('item/<int:pk>/delete', ItemDeleteView.as_view(), name='item-delete'),
     path('base/', new_base, name='base'),
+    path('order/<int:pk>/update', OrderUpdateView.as_view(), name='order-update'),
 ]

@@ -9,7 +9,7 @@ from users.models import User, Profile
 CATEGORY_CHOICES = (
     ('1','Sale'),
     ('2','Limited'),
-    ('3','Extreme Sale')
+    ('3','ExtremeSale')
 )
 LABEL_CHOICES = (
     ('P', 'primary'),

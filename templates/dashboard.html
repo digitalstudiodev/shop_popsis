@@ -180,42 +180,4 @@
 <script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.colVis.min.js"></script>
 
-<!--Charts-->
-<script>
-    time = [{% for t in time %}'{{ t }}',{% endfor %}];
-    payment = [{% for p in payment %}${{ p }},{% endfor %}];
-
-    var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: time,
-            datasets: [{
-                label: 'Order Payments',
-                data: payment,
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-
-    /*var date_payment_trace = {
-        x: time,
-        y: payment,
-        mode: 'lines',
-        line: {
-            color: 'rgb(55, 128, 191)',
-            width: 3
-        }
-    };
-    var date_payment_data = [date_payment_trace];
-    Plotly.newPlot('date-payment', date_payment_data);*/
-</script>
 {% endblock extra_scripts %}

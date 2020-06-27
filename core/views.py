@@ -179,7 +179,7 @@ class CheckoutView(View):
                     else:
                         messages.info(
                             self.request, "Please fill in the required billing address fields")
-
+                '''
                 payment_option = form.cleaned_data.get('payment_option')
 
                 if payment_option == 'S':
@@ -190,6 +190,8 @@ class CheckoutView(View):
                     messages.warning(
                         self.request, "Invalid payment option selected")
                     return redirect('core:checkout')
+                '''
+                return redirect('core:payment')
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("core:order-summary")
@@ -370,7 +372,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
-            return redirect("core:shop")
+            return redirect("core:home")
 
 class ItemDetailView(DetailView):
     model = Item
@@ -610,18 +612,9 @@ def contact(request):
 
 @login_required(login_url='users:login')
 def dashboard(request):
-    time = []
-    payment = []
-    for order in Order.objects.all().order_by('ordered_date'):
-        time.append(order.ordered_date.strftime("%m/%d/%Y"))
-    for order in Order.objects.all().order_by('ordered_date'):
-        payment.append(order.payment.amount)
-    
     context = {
         'items': Item.objects.all(),
         'orders': Order.objects.all(),
-        'time': time,
-        'payment': payment,
     }
     return render(request, 'dashboard.html', context)
 

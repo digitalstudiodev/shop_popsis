@@ -87,18 +87,18 @@
     </a>
   </div>
 </header>
-{% if messages %}
+<section>
+  <div class="container" style="position: relative;">
+    {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-5" role="alert" style="border-radius: 2rem;">
         {{ message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     {% endfor %}
-{% endif %}
-<section>
-  <div class="container" style="position: relative;">
+  {% endif %}
     <div class="col-12 py-5">
       <img src="{% static 'img/poster.jpg' %}" class="img-fluid rounded shadow d-block" />
       <div class="bg-white rounded shadow hide" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">

@@ -52,19 +52,21 @@
         <h3 class="mb-5">Coupons</h3>
         <div class="row">
             {% if coupon.count > 0 %}
-            {% for c in coupon %}
-            <div class="col-3 mb-5">
-                <a href="{% url 'core:coupon-detail' c.id %}" style="text-decoration: none;" class="text-dark">
-                    <div class="card zoom shadow">
-                        <img src="{% static 'img/coupon.png' %}" class="m-auto py-2" width="30%" height="30%" alt="Coupon Icon" />
-                        <div class="card-body">
-                            <h5 class="card-title text-muted text-uppercase text-center">{{ c.code }}</h5>
-                            <h6 class="text-center"><span class="font-weight-bold" style="font-size: xx-large;">${{ c.amount }}</span></h6>
+                {% for c in coupon %}
+                <div class="col-3 mb-5">
+                    <a href="{% url 'core:coupon-detail' c.id %}" style="text-decoration: none;" class="text-dark">
+                        <div class="card zoom shadow">
+                            <img src="{% static 'img/coupon.png' %}" class="m-auto py-2" width="30%" height="30%" alt="Coupon Icon" />
+                            <div class="card-body">
+                                <h5 class="card-title text-muted text-uppercase text-center">{{ c.code }}</h5>
+                                <h6 class="text-center"><span class="font-weight-bold" style="font-size: xx-large;">${{ c.amount }}</span></h6>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
+                    </a>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p>No Coupons</p>
             {% endif %}
             <div class="col-12">
                 <a href="{% url 'core:coupon-create' %}" class="btn btn-lg btn-warning my-5" style="border-radius: 2rem;">Add New Coupon</a>

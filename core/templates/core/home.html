@@ -47,6 +47,7 @@
 {% endblock head %}
 
 {% block content %}
+<!--slideshow header-->
 <header>
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -55,21 +56,21 @@
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
-      <!-- Slide One - Set the background image for this slide in the line below -->
+      <!--slide 1-->
       <div class="carousel-item active" style="background-image: url({% static 'img/main.jpg' %})">
         <div class="carousel-caption d-none d-md-block">
           <!--<h3 class="display-4">First Slide</h3>
           <p class="lead">This is a description for the first slide.</p>-->
         </div>
       </div>
-      <!-- Slide Two - Set the background image for this slide in the line below -->
+      <!--slide 2-->
       <div class="carousel-item" style="background-image: url({% static 'img/main_two.jpg' %})">
         <div class="carousel-caption d-none d-md-block">
           <!--<h3 class="display-4">Second Slide</h3>
           <p class="lead">This is a description for the second slide.</p>-->
         </div>
       </div>
-      <!-- Slide Three - Set the background image for this slide in the line below -->
+      <!--slide 3-->
       <div class="carousel-item" style="background-image: url({% static 'img/main_three.jpg' %})">
         <div class="carousel-caption d-none d-md-block">
           <!--<h3 class="display-4">Third Slide</h3>
@@ -87,18 +88,10 @@
     </a>
   </div>
 </header>
+<!--main-->
 <section>
   <div class="container" style="position: relative;">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-5" role="alert" style="border-radius: 2rem;">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-  {% endif %}
+  {% include 'core/messages.html' %}
     <div class="col-12 py-5">
       <img src="{% static 'img/poster.jpg' %}" class="img-fluid rounded shadow d-block" />
       <div class="bg-white rounded shadow hide" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">
@@ -106,10 +99,6 @@
         <p class="lead">15% off + extra $10 with code 'YES'</p>
       </div>
     </div>
-  </div>
-</section>
-<section>
-  <div class="container" style="position: relative;">
     <div class="col-12 py-5">
       <img src="{% static 'img/main_four.jpg' %}" class="img-fluid rounded shadow d-block" />
       <div class="bg-white rounded shadow hide" style="position: absolute;width: 40%;padding: 20px;text-align: center;bottom: 30%;left: 30%;">
@@ -119,45 +108,11 @@
     </div>
   </div>
 </section>
+<!--items-->
 <section>
   <div class="container">
     <div class="row">
       {% for item in items %}
-      <!--<div class="col-lg-3 col-md-6 mb-4">
-        <div class="card shadow zoom">
-            <div class="view overlay">
-                <img src="{{ item.image.url }}" class="card-img-top" alt="Product Image">
-                <a href="{{ item.get_absolute_url }}">
-                    <div class="mask rgba-white-slight"></div>
-                </a>
-            </div>
-            <div class="card-body text-center">
-                <a href="{{ item.get_absolute_url }}" class="grey-text">
-                    <h5>{{ item.get_category_display }}</h5>
-                </a>
-                <h5>
-                    <strong>
-                                <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
-                                    {% if item.inventory == 0 %}
-                                        <span class="badge badge-pill {{ item.get_label_display }}-color">Sold Out</span>
-                                    {% elif item.discount_price %}
-                                        <span class="badge badge-pill {{ item.get_label_display }}-color">On Sale</span>
-                                    {% endif %}
-                                </a>
-                    </strong>
-                </h5>
-                <h4 class="font-weight-bold blue-text">
-                            <strong>$ 
-                                {% if item.discount_price  %}
-                                    {{ item.discount_price }} <strike style="font-size: small;">{{ item.price }}</strike>
-                                {% else %}
-                                    {{ item.price }}
-                                {% endif %}
-                            </strong>
-                </h4>
-            </div>
-        </div>
-      </div>-->
       <div class="col-lg-3 col-sm-6 mb-4">
         <div class="card h-100">
           <a href="{{ item.get_absolute_url }}"><img class="card-img-top" src="{{ item.image.url }}" alt="Product Image"></a>

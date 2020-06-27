@@ -3,18 +3,7 @@
 {% load static %}
 {% block content %}
 <main class="mt-5 pt-5">
-    {% if messages %}
-    <div class="container py-5">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            {% endfor %}
-    </div>
-    {% endif %}
+    {% include 'core/messages.html' %}
     <div class="container py-5">
         <h2 class="text-center">Admin Dashboard</h2>
         <h3 class="mb-5">Inventory</h3>
@@ -71,10 +60,6 @@
                         <div class="card-body">
                             <h5 class="card-title text-muted text-uppercase text-center">{{ c.code }}</h5>
                             <h6 class="text-center"><span class="font-weight-bold" style="font-size: xx-large;">${{ c.amount }}</span></h6>
-                            <!--<ul style="list-style: none;">
-                                <li>Code: {{ c.code }}</li>
-                                <li>Savings: ${{ c.amount }}</li>
-                            </ul>-->
                         </div>
                     </div>
                 </a>

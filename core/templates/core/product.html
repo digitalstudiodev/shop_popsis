@@ -1,20 +1,8 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-  <!--Main layout-->
   <main class="mt-5 pt-5">
-    {% if messages %}
-    <div class="container py-5">
-      {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="border-radius: 2rem;">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+    {% include 'core/messages.html' %}
     <div class="container dark-grey-text py-5">
       <div class="row wow fadeIn">
         <div class="col-md-4 mb-4">
@@ -76,16 +64,13 @@
 
         </div>
       </div>
-
       <hr>
-
       <div class="row d-flex justify-content-center wow fadeIn">
         <div class="col-md-6 text-center">
           <h4 class="my-4 h4">Additional information</h4>
           <p>{{ object.additional_info }}</p>
         </div>
       </div>
-
       <div class="row wow fadeIn">
 
         <!--Grid column-->
@@ -115,5 +100,4 @@
       </div>
     </div>
   </main>
-  <!--Main layout-->
 {% endblock content %}

@@ -342,26 +342,6 @@ class HomeView(ListView):
     paginate_by = 4
     template_name = "core/home.html"
 
-class ShopView(ListView):
-    model = Item
-    paginate_by = 10
-    template_name = "core/shop.html"
-
-class SaleView(ListView):
-    model = Item
-    paginate_by = 10
-    template_name = "core/sale.html"
-
-class LimitedView(ListView):
-    model = Item
-    paginate_by = 10
-    template_name = "core/limited.html"
-
-class ExtremeSaleView(ListView):
-    model = Item
-    paginate_by = 10
-    template_name = "core/extreme_sale.html"
-
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
@@ -477,7 +457,6 @@ def add_to_cart(request, slug):
             messages.info(request, "This item is sold out.")
             return redirect("core:product", slug=slug)
 
-
 @login_required(login_url='users:login')
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -539,7 +518,6 @@ def remove_single_item_from_cart(request, slug):
     else:
         messages.info(request, "You do not have an active order.")
         return redirect("core:product", slug=slug)
-
 
 def get_coupon(request, code):
     try:
@@ -659,9 +637,6 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-
-def new_base(request):
-    return render(request, "core/new_base.html")
 
 class CouponCreateView(LoginRequiredMixin, CreateView):
     model = Coupon

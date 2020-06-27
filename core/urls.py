@@ -1,8 +1,6 @@
 from django.urls import path, include
 from .views import (
     HomeView, 
-    ShopView,
-    SaleView,
     CheckoutView, 
     ItemDetailView, 
     add_to_cart,
@@ -22,9 +20,6 @@ from .views import (
     ItemCreateView,
     ItemUpdateView, 
     ItemDeleteView, 
-    LimitedView,
-    ExtremeSaleView, 
-    new_base,
     home,
     OrderUpdateView,
     CouponCreateView,
@@ -36,12 +31,7 @@ from .views import (
 app_name = 'core'
 
 urlpatterns = [
-    #path('', HomeView.as_view(), name='home'),
     path('', home, name='home'),
-    path('shop/', home, name='shop'),
-    path('last-chance/', SaleView.as_view(), name='last-chance'),
-    path('limited/', LimitedView.as_view(), name='limited'),
-    path('extreme-sale/', ExtremeSaleView.as_view(), name='extreme-sale'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
     path('product/<slug>/', ItemDetailView.as_view(), name='product'),
@@ -61,7 +51,6 @@ urlpatterns = [
     path('item/new/', ItemCreateView.as_view(), name='item-create'),
     path('item/<int:pk>/update', ItemUpdateView.as_view(), name='item-update'),
     path('item/<int:pk>/delete', ItemDeleteView.as_view(), name='item-delete'),
-    path('base/', new_base, name='base'),
     path('order/<int:pk>/update', OrderUpdateView.as_view(), name='order-update'),
     path('coupon/new/', CouponCreateView.as_view(), name='coupon-create'),
     path('coupon/<int:pk>/', CouponDetailView.as_view(), name='coupon-detail'),

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% load static %}
 {% block content %}
 <main class="mt-5 pt-5">
@@ -66,7 +66,7 @@
         <div class="container py-5">
             <div class="row wow fadeIn">
             {% for item in object_list %}
-            {% if item.category == '3' %}
+            {% if item.discount_price %}
             <div class="col-lg-3 col-sm-6 mb-4">
                 <div class="card h-100">
                   <a href="{{ item.get_absolute_url }}"><img class="card-img-top" src="{{ item.image.url }}" alt="Product Image"></a>

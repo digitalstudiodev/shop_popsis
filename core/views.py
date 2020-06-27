@@ -335,32 +335,32 @@ def home(request):
     context = {
         'items': Item.objects.all()[:16]
     }
-    return render(request, "home.html", context)
+    return render(request, "core/home.html", context)
 
 class HomeView(ListView):
     model = Item
     paginate_by = 4
-    template_name = "home.html"
+    template_name = "core/home.html"
 
 class ShopView(ListView):
     model = Item
     paginate_by = 10
-    template_name = "shop.html"
+    template_name = "core/shop.html"
 
 class SaleView(ListView):
     model = Item
     paginate_by = 10
-    template_name = "sale.html"
+    template_name = "core/sale.html"
 
 class LimitedView(ListView):
     model = Item
     paginate_by = 10
-    template_name = "limited.html"
+    template_name = "core/limited.html"
 
 class ExtremeSaleView(ListView):
     model = Item
     paginate_by = 10
-    template_name = "extreme_sale.html"
+    template_name = "core/extreme_sale.html"
 
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
@@ -369,18 +369,18 @@ class OrderSummaryView(LoginRequiredMixin, View):
             context = {
                 'object': order
             }
-            return render(self.request, 'order_summary.html', context)
+            return render(self.request, 'core/order_summary.html', context)
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("core:home")
 
 class ItemDetailView(DetailView):
     model = Item
-    template_name = "product.html"
+    template_name = "core/product.html"
 
 class OrderDetailView(DetailView):
     model = Order
-    template_name = "order_detail.html"
+    template_name = "core/order_detail.html"
 
 class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Order
@@ -596,19 +596,19 @@ class RequestRefundView(View):
                 return redirect("core:request-refund")
 
 def shipping_return(request):
-    return render(request, 'shipping_return.html')
+    return render(request, 'core/shipping_return.html')
 
 def privacy_policy(request):
-    return render(request, 'privacy_policy.html')
+    return render(request, 'core/privacy_policy.html')
 
 def terms_use(request):
-    return render(request, 'terms_use.html')
+    return render(request, 'core/terms_use.html')
 
 def about_us(request):
-    return render(request, 'about_us.html')
+    return render(request, 'core/about_us.html')
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'core/contact.html')
 
 @login_required(login_url='users:login')
 def dashboard(request):
@@ -617,7 +617,7 @@ def dashboard(request):
         'orders': Order.objects.all(),
         'coupon': Coupon.objects.all(),
     }
-    return render(request, 'dashboard.html', context)
+    return render(request, 'core/dashboard.html', context)
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item

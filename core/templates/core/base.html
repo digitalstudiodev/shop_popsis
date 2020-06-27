@@ -53,7 +53,7 @@
     </head>
     
     <body>
-        {% include "navbar.html" %}
+        {% include "core/navbar.html" %}
         
         {% block content %}
         {% endblock content %}
@@ -64,8 +64,8 @@
         {% block scripts %}
         {% endblock scripts %}
 
-        {% include "footer.html" %}
-        {% include "scripts.html" %}
+        {% include "core/footer.html" %}
+        {% include "core/scripts.html" %}
 
         {% block extra_scripts %}
         {% endblock extra_scripts %}

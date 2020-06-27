@@ -144,6 +144,9 @@ class Coupon(models.Model):
 
     def __str__(self):
         return self.code
+    
+    def get_absolute_url(self):
+        return reverse("core:dashboard")
 
 class Refund(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

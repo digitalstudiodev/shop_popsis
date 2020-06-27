@@ -615,6 +615,7 @@ def dashboard(request):
     context = {
         'items': Item.objects.all(),
         'orders': Order.objects.all(),
+        'coupon': Coupon.objects.all(),
     }
     return render(request, 'dashboard.html', context)
 
@@ -661,3 +662,42 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def new_base(request):
     return render(request, "core/new_base.html")
+
+class CouponCreateView(LoginRequiredMixin, CreateView):
+    model = Coupon
+    fields = [
+        'code', 'amount'
+    ]
+
+    def form_valid(self, form):
+        messages.success(self.request, f'You have successfully added a new coupon')
+        return super().form_valid(form)
+
+class CouponDetailView(DetailView):
+    model = Coupon
+
+class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Coupon
+    fields = [
+        'code', 'amount'
+    ]
+
+    def form_valid(self, form):
+        messages.success(self.request, f'You have successfully updated the coupon')
+        return super().form_valid(form)
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_superuser:
+            return True
+        return False
+
+class CouponDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Coupon
+    success_url = '/dashboard/'
+
+    def test_func(self):
+        coupon = self.get_object()
+        if self.request.user.is_superuser:
+            return True
+        return False

@@ -26,7 +26,11 @@ from .views import (
     ExtremeSaleView, 
     new_base,
     home,
-    OrderUpdateView
+    OrderUpdateView,
+    CouponCreateView,
+    CouponDetailView,
+    CouponUpdateView,
+    CouponDeleteView
     )
 
 app_name = 'core'
@@ -59,4 +63,8 @@ urlpatterns = [
     path('item/<int:pk>/delete', ItemDeleteView.as_view(), name='item-delete'),
     path('base/', new_base, name='base'),
     path('order/<int:pk>/update', OrderUpdateView.as_view(), name='order-update'),
+    path('coupon/new/', CouponCreateView.as_view(), name='coupon-create'),
+    path('coupon/<int:pk>/', CouponDetailView.as_view(), name='coupon-detail'),
+    path('coupon/<int:pk>/update', CouponUpdateView.as_view(), name='coupon-update'),
+    path('coupon/<int:pk>/delete', CouponDeleteView.as_view(), name='coupon-delete'),
 ]

@@ -25,7 +25,11 @@
             </li>
             {% endif %}
             <li class="list-group-item d-flex justify-content-between">
-                <span>Tax</span>
+                <span>Shipping</span>
+                <strong>${{ order.shipping }}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Processing Fee</span>
                 <strong>${{ order.tax_total }}</strong>
             </li>
             <li class="list-group-item d-flex justify-content-between">

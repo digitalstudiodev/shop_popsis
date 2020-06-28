@@ -55,7 +55,7 @@ class CheckoutView(View):
                 context.update(
                     {'default_billing_address': billing_address_qs[0]})
 
-            return render(self.request, "checkout.html", context)
+            return render(self.request, "core/checkout.html", context)
         except ObjectDoesNotExist:
             messages.info(self.request, "You do not have an active order")
             return redirect("core:checkout")

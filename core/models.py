@@ -103,12 +103,15 @@ class Order(models.Model):
     
     def tax_total(self):
         tax = 0 
-        tax += round((self.get_total() * 0.065), 2)
+        tax += round((self.get_total() * 0.07), 2)
         return tax
+
+    def shipping(self):
+        return 5
 
     def get_absolute_total(self):
         absolute_total = 0
-        absolute_total += round((self.get_total() + self.tax_total()), 2)
+        absolute_total += round((self.get_total() + self.tax_total() + self.shipping()), 2)
         return absolute_total
 
 

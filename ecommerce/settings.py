@@ -50,8 +50,9 @@ INSTALLED_APPS = [
     'django_countries',
     ##Storages
     'storages',
-    'users.apps.UsersConfig'
-
+    'users.apps.UsersConfig',
+    #Dashboard App
+    'dashboard',
 ]
 
 MIDDLEWARE = [

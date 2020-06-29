@@ -219,7 +219,7 @@ class PaymentView(View):
                     context.update({
                         'card': card_list[0]
                     })
-            return render(self.request, "payment.html", context)
+            return render(self.request, "core/payment.html", context)
         else:
             messages.warning(
                 self.request, "You have not added a billing address")
@@ -669,7 +669,7 @@ class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class CouponDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Coupon
-    success_url = '/dashboard/'
+    success_url = '/dashboard/dashboard'
 
     def test_func(self):
         coupon = self.get_object()

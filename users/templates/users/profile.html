@@ -9,10 +9,6 @@
                 <div class="col-lg-9 m-auto">
                     <h6>Email&nbsp;&nbsp;&nbsp;<span style="font-size: small;">{{ user.email }}</span></h6>
                     <a href="{% url 'users:profile-update' %}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">Update Profile</a>
-                    {% if request.user.is_superuser %}
-                    <br><br>
-                    <a href="{% url 'core:dashboard' %}" class="btn btn-lg btn-warning" style="border-radius: 2rem;">Admin Dashboard</a>
-                    {% endif %}
                 </div>
         </div>
         <hr>

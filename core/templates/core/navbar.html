@@ -41,6 +41,13 @@
                     <span class="clearfix d-sm-inline-block"> Profile </span>
                     </a>
                 </li>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link waves-effect" href="{% url 'dashboard:dashboard' %}">
+                    <span class="clearfix d-sm-inline-block"> Dashboard </span>
+                    </a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link waves-effect" href="{% url 'users:logout' %}">
                     <span class="clearfix d-sm-inline-block">Logout</span>

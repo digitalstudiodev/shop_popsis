@@ -58,18 +58,18 @@ class OrderItem(models.Model):
         return f"{self.quantity} of {self.item.title}"
 
     def get_total_item_price(self):
-        return "{:.2f}".format(self.quantity * self.item.price)
+        return round(self.quantity * self.item.price,2)
     
     def get_total_discount_item_price(self):
-        return "{:.2f}".format(self.quantity * self.item.discount_price)
+        return round(self.quantity * self.item.discount_price)
 
     def get_amount_saved(self):
         return "{:.2f}".format(self.get_total_item_price() - self.get_total_discount_item_price())
     
     def get_final_price(self):
         if self.item.discount_price:
-            return "{:.2f}".format(self.get_total_discount_item_price())
-        return "{:.2f}".format(self.get_total_item_price())
+            return round(self.get_total_discount_item_price(),2)
+        return round(self.get_total_item_price(),2)
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -99,12 +99,12 @@ class Order(models.Model):
             total += round(order_item.get_final_price(), 2)
         if self.coupon:
             total -= round(self.coupon.amount, 2)
-        return "{:.2f}".format(total)
+        return total
     
     def tax_total(self):
         tax = 0 
         tax += round((self.get_total() * 0.07), 2)
-        return "{:.2f}".format(tax)
+        return tax
 
     def shipping(self):
         return 5
@@ -112,7 +112,7 @@ class Order(models.Model):
     def get_absolute_total(self):
         absolute_total = 0
         absolute_total += round((self.get_total() + self.tax_total() + self.shipping()), 2)
-        return "{:.2f}".format(absolute_total)
+        return absolute_total
 
 
 class Address(models.Model):

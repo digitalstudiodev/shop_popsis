@@ -273,10 +273,12 @@
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'core:order-update' o.id %}">
-                                                        {% if o.being_delievered %}
+                                                        {% if o.being_delievered and not o.received %}
                                                             Being Delivered
-                                                        {% elif o.received %}
+                                                        {% elif o.received and not o.being_delievered %}
                                                             Received
+                                                        {% elif o.received and o.being_delievered %}
+                                                            Review
                                                         {% else %}
                                                             Pending ~ Not Shipped
                                                         {% endif %}

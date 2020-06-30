@@ -322,7 +322,13 @@
                                                 <td>
                                                     <a href="{% url 'core:product' i.slug %}">{{ i.title }}</a>
                                                 </td>
-                                                <td>{{ i.inventory }}</td>
+                                                <td>
+                                                    {% if i.inventory == 0 %}
+                                                        Sold Out
+                                                    {% else %}
+                                                        {{ i.inventory }}
+                                                    {% endif %}
+                                                </td>
                                                 <td>
                                                     {% if discount_price %}
                                                         ${{ i.discount_price }}
@@ -386,11 +392,13 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Free Soul 2019</div>
+                            <div class="text-muted"><a href="{% url 'core:home' %}" class="text-dark">Free Soul</a> &copy; 2019. All Rights Reserved. Powered by <a href="https://digitalstudio.dev/" class="text-dark">Digital Studio</a></div>
                             <div>
-                                <a href="#">Privacy Policy</a>
+                                <a href="{% url 'core:shipping-return' %}" class="text-dark">Shipping &amp; Returns</a>
                                 &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+                                <a href="{% url 'core:privacy-policy' %}" class="text-dark">Privacy Policy</a>
+                                &middot;
+                                <a href="{% url 'core:terms-use' %}" class="text-dark">Terms of Use</a>
                             </div>
                         </div>
                     </div>

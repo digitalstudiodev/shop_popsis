@@ -601,11 +601,13 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     fields = [
         'title', 'price', 'discount_price', 'category', 'label',
-        'slug', 'description', 'additional_info', 'image', 'image_sub_one',
+        'description', 'additional_info', 'image', 'image_sub_one',
         'image_sub_two', 'image_sub_three', 'inventory'
     ]
 
     def form_valid(self, form):
+        item_title = str(form.instance.title)
+        form.instance.slug = item_title.replace(" ", "-")
         messages.success(self.request, f'You have successfully added a new item')
         return super().form_valid(form)
 
@@ -613,11 +615,13 @@ class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Item
     fields = [
         'title', 'price', 'discount_price', 'category', 'label',
-        'slug', 'description', 'additional_info', 'image', 'image_sub_one',
+        'description', 'additional_info', 'image', 'image_sub_one',
         'image_sub_two', 'image_sub_three', 'inventory'
     ]
 
     def form_valid(self, form):
+        item_title = str(form.instance.title)
+        form.instance.slug = item_title.replace(" ", "-")
         messages.success(self.request, f'You have successfully updated the item')
         return super().form_valid(form)
 

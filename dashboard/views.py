@@ -4,7 +4,7 @@ from core.models import Order, Item, Coupon
 # Create your views here.
 def dashboard(request):
     try: 
-        orders = Order.objects.all()
+        orders = Order.objects.all().filter(ordered=True)
         items = Item.objects.all()
         coupons = Coupon.objects.all()
         total_sales = 0

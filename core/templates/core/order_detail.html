@@ -7,6 +7,22 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mb-5">Order</h2>
+                <h6>Ref Code&nbsp;&nbsp;&nbsp;&nbsp;{{ object.ref_code }}</h6>
+                <h6>Ordered&nbsp;&nbsp;&nbsp;&nbsp;{{ object.ordered_date }}</h6>
+                <h6>Shipping Address&nbsp;&nbsp;&nbsp;&nbsp;{{ object.shipping_address.street_address }} {{ object.shipping_address.apartment_address }}, {{ object.shipping_address.country }}, {{ object.shipping_address.zip_code }}</h6>
+                <h6>Billing Address&nbsp;&nbsp;&nbsp;&nbsp;{{ object.billing_address.street_address }} {{ object.billing_address.apartment_address }}, {{ object.billing_address.country }}, {{ object.billing_address.zip_code }}</h6>
+                <h6 class="mb-5">
+                    Status&nbsp;&nbsp;&nbsp;&nbsp;
+                    {% if o.being_delievered and not o.received %}
+                        Being Delivered
+                    {% elif o.received and not o.being_delievered %}
+                        Received
+                    {% elif o.received and o.being_delievered %}
+                        Under Review
+                    {% else %}
+                        Pending ~ Not Shipped
+                    {% endif %}
+                </h6>
                 <!--{% if object.items.all %}
                     <h6>Refernce Code: {{ object.ref_code }}</h6>
                     <h6>Date: {{ object.ordered_date }}</h6>

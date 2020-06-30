@@ -99,12 +99,12 @@ class Order(models.Model):
             total += round(order_item.get_final_price(), 2)
         if self.coupon:
             total -= round(self.coupon.amount, 2)
-        return total
+        return round(total,2)
     
     def tax_total(self):
         tax = 0 
         tax += round((self.get_total() * 0.07), 2)
-        return tax
+        return round(tax,2)
 
     def shipping(self):
         return 5
@@ -112,7 +112,7 @@ class Order(models.Model):
     def get_absolute_total(self):
         absolute_total = 0
         absolute_total += round((self.get_total() + self.tax_total() + self.shipping()), 2)
-        return absolute_total
+        return round(absolute_total,2)
 
 
 class Address(models.Model):

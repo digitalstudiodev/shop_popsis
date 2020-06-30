@@ -101,7 +101,7 @@
                         {% endfor %}
                         {% if object.coupon %}
                         <tr>
-                            <td colspan="4"><b>Coupon</b></td>
+                            <td colspan="4"><b>Coupon</b>&nbsp;~&nbsp;{{ object.coupon.code }}</td>
                             <td><b>-${{ object.coupon.amount }}</b></td>
                         </tr>
                         {% endif %}

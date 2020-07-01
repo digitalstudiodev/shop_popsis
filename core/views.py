@@ -13,6 +13,8 @@ from users.models import User, Profile
 import random
 import string
 import stripe
+from ecommerce.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def create_ref_code():
@@ -266,7 +268,7 @@ class PaymentView(View):
                         receipt_email=self.request.user.email,
                     )
 
-                # create the payment
+                #create the payment
                 payment = Payment()
                 payment.stripe_charge_id = charge['id']
                 payment.user = self.request.user
@@ -279,11 +281,23 @@ class PaymentView(View):
                 for item in order_items:
                     item.save()
 
+                #set final order vars and save
                 order.ordered = True
                 order.payment = payment
                 order.ref_code = create_ref_code()
                 order.save()
 
+                #sending email with their order details
+                send_mail(
+                    "Order Confirmation", 
+                    "Order Confirmation", 
+                    EMAIL_HOST_USER, 
+                    [self.request.user.email], 
+                    fail_silently = False,
+                    html_message="<h1>Thank you for shopping at Free Soul</h1><p>You order is pending and you will receieve notification as to its status.</p>",
+                )
+
+                #success message and redirect
                 messages.success(self.request, "Your order was successful!")
                 return redirect("users:profile")
 

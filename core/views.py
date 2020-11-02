@@ -351,6 +351,24 @@ def home(request):
     }
     return render(request, "core/home.html", context)
 
+def shop_bags(request):
+    context = {
+        'items': Item.objects.filter(category="1")
+    }
+    return render(request, "core/shop_cat.html", context)
+
+def shop_earrings(request):
+    context = {
+        'items': Item.objects.filter(category="2")
+    }
+    return render(request, "core/shop_cat.html", context)
+
+def shop_lipgloss(request):
+    context = {
+        'items': Item.objects.filter(category="3")
+    }
+    return render(request, "core/shop_cat.html", context)
+
 class HomeView(ListView):
     model = Item
     paginate_by = 4
@@ -654,7 +672,6 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user.is_superuser:
             return True
         return False
-
 
 class CouponCreateView(LoginRequiredMixin, CreateView):
     model = Coupon

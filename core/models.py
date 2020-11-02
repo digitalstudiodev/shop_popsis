@@ -7,9 +7,9 @@ from users.models import User, Profile
 
 # Create your models here.
 CATEGORY_CHOICES = (
-    ('1','Sale'),
-    ('2','Limited'),
-    ('3','ExtremeSale')
+    ('1','Earrings'),
+    ('2','Bags'),
+    ('3','Lip Gloss')
 )
 LABEL_CHOICES = (
     ('P', 'primary'),

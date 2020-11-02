@@ -25,7 +25,8 @@ from .views import (
     CouponCreateView,
     CouponDetailView,
     CouponUpdateView,
-    CouponDeleteView
+    CouponDeleteView,
+    shop_bags, shop_earrings, shop_lipgloss,
     )
 
 app_name = 'core'
@@ -56,4 +57,7 @@ urlpatterns = [
     path('coupon/<int:pk>/', CouponDetailView.as_view(), name='coupon-detail'),
     path('coupon/<int:pk>/update', CouponUpdateView.as_view(), name='coupon-update'),
     path('coupon/<int:pk>/delete', CouponDeleteView.as_view(), name='coupon-delete'),
+    path('shop-bags/', shop_bags, name='shop-bags'),
+    path('shop-earrings/', shop_earrings, name='shop-earrings'),
+    path('shop-lipgloss/', shop_lipgloss, name='shop-lipgloss'),
 ]

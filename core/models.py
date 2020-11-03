@@ -112,7 +112,10 @@ class Order(models.Model):
     def get_absolute_total(self):
         absolute_total = 0
         absolute_total += round((self.get_total() + self.tax_total() + self.shipping()), 2)
-        return round(absolute_total,2)
+        if absolute_total >= 0: 
+            return round(absolute_total,2)
+        else:
+            return 0
 
 
 class Address(models.Model):

@@ -116,6 +116,14 @@ class Order(models.Model):
             return round(absolute_total,2)
         else:
             return 0
+    
+    def status(self):
+        if self.being_delievered:
+            return "Being Delivered"
+        elif self.received:
+            return "Received"
+        elif not self.being_delievered or not self.received:
+            return "Pending"
 
 
 class Address(models.Model):

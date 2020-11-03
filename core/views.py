@@ -257,7 +257,6 @@ class PaymentView(View):
                         amount=amount,  # cents
                         currency="usd",
                         customer=userprofile.stripe_customer_id,
-                        receipt_email=self.request.user.email,
                     )
                 else:
                     # charge once off on the token
@@ -265,7 +264,6 @@ class PaymentView(View):
                         amount=amount,  # cents
                         currency="usd",
                         source=token,
-                        receipt_email=self.request.user.email,
                     )
 
                 #create the payment
@@ -294,7 +292,7 @@ class PaymentView(View):
                     EMAIL_HOST_USER, 
                     [self.request.user.email], 
                     fail_silently = False,
-                    html_message="<h1>Thank you for shopping at Free Soul</h1><p>You order is pending and you will receieve notification as to its status.</p>",
+                    html_message="<h1>Thank you for shopping with Popsis</h1><p>You order is pending and you will receieve notification as to its status.</p>",
                 )
 
                 #success message and redirect

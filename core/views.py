@@ -263,7 +263,7 @@ class PaymentView(View):
                     charge = stripe.Charge.create(
                         amount=amount,  # cents
                         currency="usd",
-                        source=token,
+                        customer=token,
                     )
 
                 #create the payment

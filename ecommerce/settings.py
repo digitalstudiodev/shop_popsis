@@ -29,7 +29,7 @@ STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['free-soul.herokuapp.com','*','localhost/','https://www.shoppopsis.com/']
+ALLOWED_HOSTS = ['popsis.herokuapp.com','*','localhost/','https://www.shoppopsis.com/','http://www.shoppopsis.com/']
 
 
 # Application definition

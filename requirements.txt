@@ -23,7 +23,7 @@ chardet==3.0.4
 Click==7.0
 colorama==0.3.9
 colorlover==0.3.0
-cryptography==2.7
+cryptography==3.2
 cufflinks==0.16
 cycler==0.10.0
 dash==1.14.0

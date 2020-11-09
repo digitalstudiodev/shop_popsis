@@ -8,6 +8,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import User
 from core.models import Order
 
+def handler404(request):
+    messages.info(request, f'Invalid Request')
+    return redirect('core:home')
+    
+def handler500(request):
+    messages.info(request, f'Invalid Request')
+    return redirect('core:home')
+
 def register(request):
     form = UserRegisterForm()
     if request.method == 'POST':

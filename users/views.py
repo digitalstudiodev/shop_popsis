@@ -10,11 +10,11 @@ from core.models import Order
 
 def handler404(request):
     messages.info(request, f'Invalid Request')
-    return redirect('core:home')
-    
+    return redirect('core:home', status=404)
+
 def handler500(request):
     messages.info(request, f'Invalid Request')
-    return redirect('core:home')
+    return redirect('core:home', status=500)
 
 def register(request):
     form = UserRegisterForm()

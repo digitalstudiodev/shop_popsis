@@ -41,17 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    ##Core App
     'core',
-    ##Crispy Forms
     'crispy_forms',
-    ##Django Countries
     'django_countries',
-    ##Storages
     'storages',
     'users.apps.UsersConfig',
-    #Dashboard App
     'dashboard',
 ]
 

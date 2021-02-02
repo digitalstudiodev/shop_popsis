@@ -9,7 +9,7 @@ awsebcli==3.15.2
 backcall==0.1.0
 bcrypt==3.2.0
 beautifulsoup4==4.7.1
-bleach==3.1.0
+bleach==3.3.0
 blessed==1.15.0
 blinker==1.4
 boto==2.49.0

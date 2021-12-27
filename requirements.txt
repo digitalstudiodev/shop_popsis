@@ -18,3 +18,4 @@ pandas==0.25.0
 requests==2.20.1
 stripe==2.41.0
 whitenoise==4.1.3
+django-user-visit==0.5.1

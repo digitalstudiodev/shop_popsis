@@ -1,76 +1,196 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>{% block head_title %}{% endblock %}</title>
-        {% block extra_head %}
-        {% endblock extra_head %}
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-        <!-- Bootstrap core CSS -->
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-        <!-- Material Design Bootstrap -->
-        <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
-        <!-- Your custom styles (optional) -->
-        <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
-        <!-- Bootstrap Dropdown Hover CSS -->
-        <link href="css/animate.min.css" rel="stylesheet">
-        <link href="css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 
-        <!-- Font -->
-        <link href="https://fonts.googleapis.com/css?family=Work+Sans:500&display=swap" rel="stylesheet">
-        <style>
-            body {
-                font-family: 'Work Sans', sans-serif;
-            }
-            .zoom {
-                transition: transform .2s;
-            }
-            .zoom:hover {
-                transform: scale(1.05); 
-            }
-            .shadow {
-                -webkit-box-shadow: 3px 5px 43px -10px rgba(0,0,0,0.81);
-                -moz-box-shadow: 3px 5px 43px -10px rgba(0,0,0,0.81);
-                box-shadow: 3px 5px 43px -10px rgba(0,0,0,0.81);
-            }
-            .pricing .card-price {
-            font-size: 3rem;
-            margin: 0;
-            }
-            .pricing .card-price .period {
-            font-size: 0.8rem;
-            }
-            .card-title {
-            margin: 0.5rem 0;
-            font-size: 0.9rem;
-            letter-spacing: .1rem;
-            font-weight: bold;
-            }
-        </style>
-        {% block head %}
-        {% endblock head %}
-    </head>
-    
-    <body>
-        {% include "core/navbar.html" %}
-        
-        {% block content %}
-        {% endblock content %}
+<head>
+	<title>
+		{% block title %}
+		{% endblock title %}
+	</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Colo Shop Template">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'core/styles/bootstrap4/bootstrap.min.css' %}">
+	<link href="{% static 'core/plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet"
+		type="text/css">
+	<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/OwlCarousel2-2.2.1/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'core/styles/main_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'core/styles/responsive.css' %}">
+	{% block extrastyle %}
 
-        {% block extra_body %}
-        {% endblock extra_body %}
+	{% endblock extrastyle %}
+</head>
 
-        {% block scripts %}
-        {% endblock scripts %}
+<body>
 
-        {% include "core/footer.html" %}
-        {% include "core/scripts.html" %}
+	<div class="super_container">
+		<!-- Header -->
+		<header class="header trans_300">
+			<!-- Top Navigation -->
+			<div class="top_nav">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="top_nav_left">Get $5 off your next order when you use the coupon code: YES</div>
+						</div>
+						<div class="col-md-6 text-right">
+							<div class="top_nav_right">
+								<ul class="top_nav_menu">
 
-        {% block extra_scripts %}
-        {% endblock extra_scripts %}
-    </body>
+									<!-- My Account -->
+									<li class="account">
+										<a href="#">
+											My Account
+											<i class="fa fa-angle-down"></i>
+										</a>
+										<ul class="account_selection">
+											{% if user.is_authenticated %}
+											<li><a href="{% url 'users:profile' %}">My Profile</a></li>
+											<li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+											<li><a href="{% url 'users:logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a></li>
+											{% else %}
+											<li><a href="{% url 'users:login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a>
+											</li>
+											<li><a href="{% url 'users:register' %}"><i class="fa fa-user-plus"aria-hidden="true"></i>Register</a></li>
+											{% endif %}
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main Navigation -->
+			<div class="main_nav_container">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 text-right">
+							<div class="logo_container">
+								<a href="{% url 'core:home' %}">
+									<img src="{% static 'core/images/popsis_logo.png' %}" width="auto" height="50px"
+										class="img-responsive" />
+								</a>
+							</div>
+							<nav class="navbar">
+								<ul class="navbar_menu">
+									<li><a href="{% url 'core:home' %}">home</a></li>
+									<li><a href="{% url 'core:shop-catalog' %}">shop</a></li>
+									<li><a href="{% url 'core:contact' %}">contact</a></li>
+								</ul>
+								<ul class="navbar_user">
+									{% if user.is_authenticated %}
+									<li><a href="{% url 'users:profile' %}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+									<li class="checkout">
+										<a href="{% url 'core:order-summary' %}">
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+										</a>
+									</li>
+									{% else %}
+									{% endif %}
+								</ul>
+								<div class="hamburger_container">
+									<i class="fa fa-bars" aria-hidden="true"></i>
+								</div>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="fs_menu_overlay"></div>
+		<div class="hamburger_menu">
+			<div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+			<div class="hamburger_menu_content text-right">
+				<ul class="menu_top_nav">
+					<li class="menu_item has-children">
+						<a href="#">
+							My Account
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="menu_selection">
+							{% if user.is_authenticated %}
+							<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Profile</a></li>
+							<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Sign Out</a></li>
+							{% else %}
+							<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+							<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+							{% endif %}
+						</ul>
+					</li>
+					<li class="menu_item"><a href="{% url 'core:home' %}">home</a></li>
+					<li class="menu_item"><a href="{% url 'core:shop-catalog' %}">shop</a></li>
+					<li class="menu_item"><a href="{% url 'core:contact' %}">contact</a></li>
+				</ul>
+			</div>
+		</div>
+
+		{% block content %}
+		{% endblock content %}
+
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div
+							class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+							<ul class="footer_nav">
+								<li><a href="{% url 'core:home' %}">Home</a></li>
+								<li><a href="{% url 'core:shop-catalog' %}">Shop</a></li>
+								<li><a href="{% url 'core:contact' %}">Contact</a></li>
+								{% if user.is_authenticated %}
+								<li><a href="{% url 'users:profile' %}">Profile</a></li>
+								<li><a href="{% url 'users:logout' %}">Sign Out</a></li>
+								{% else %}
+								<li><a href="{% url 'users:login' %}">Admin</a></li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div
+							class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+							<ul>
+								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+								<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="footer_nav_container">
+							<div class="cr">
+								©2021 All Rights Reserved.
+								<!--This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a>-->
+								Developed by <a href="https://digitalstudio.dev/" target="_blank"
+									class="text-muted text-dark">Digital Studio</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</div>
+
+	<script src="{% static 'core/js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'core/styles/bootstrap4/popper.js' %}"></script>
+	<script src="{% static 'core/styles/bootstrap4/bootstrap.min.js' %}"></script>
+	<script src="{% static 'core/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+	<script src="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+	<script src="{% static 'core/plugins/easing/easing.js' %}"></script>
+	<script src="{% static 'core/js/custom.js' %}"></script>
+	{% block extrascripts %}
+
+	{% endblock extrascripts %}
+</body>
+
 </html>

@@ -8,13 +8,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import User
 from core.models import Order
 
-def handler404(request):
-    messages.info(request, f'Invalid Request')
-    return redirect('core:home', status=404)
+def invalid_error(request, code):
+    messages.warning(request, f'Invalid Request {code}')
+    return render(request, 'users/404.html')
 
-def handler500(request):
-    messages.info(request, f'Invalid Request')
-    return redirect('core:home', status=500)
+def invalid_view(request):
+    messages.warning(request, f'Invalid Request')
+    return render(request, 'users/404.html')
 
 def register(request):
     form = UserRegisterForm()

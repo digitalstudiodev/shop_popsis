@@ -1,0 +1,141 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block title %}
+Shop Catalog
+{% endblock title %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/categories_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/categories_responsive.css' %}">
+{% endblock extrastyle %}
+
+{% block content %}
+<div class="container product_section_container">
+  <div class="row">
+    <div class="col product_section clearfix">
+      <!-- Breadcrumbs -->
+      <div class="breadcrumbs d-flex flex-row align-items-center">
+        <ul>
+          <li><a href="{% url 'core:home' %}">Home</a></li>
+          <li><a href="{% url 'core:shop-catalog' %}"><i class="fa fa-angle-right" aria-hidden="true"></i>Catalog</a></li>
+        </ul>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar_section">
+          <div class="sidebar_title">
+            <h5>Product Category</h5>
+          </div>
+          <form method="get" action="{% url 'core:shop-catalog' %}">
+              <div class="form-group">
+                {{ category_form }}
+              </div>
+            <p><input type="submit" value="Search" class="btn btn-warning btn-marketing text-white"/></p>
+          </form>
+        </div>
+
+        <!-- Price Range Filtering -->
+        <!--
+          <div class="sidebar_section">
+          <div class="sidebar_title">
+            <h5>Filter by Price</h5>
+          </div>
+          <p>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+          </p>
+          <div id="slider-range"></div>
+          <div class="filter_button"><span>filter</span></div>
+        </div>
+      -->
+
+      </div>
+
+      <!-- Main Content -->
+      <div class="main_content">
+        <!-- Products -->
+        <div class="products_iso">
+          <div class="row">
+            <div class="col">
+              <div class="product-grid">
+                {% for item in items %}
+                <div class="product-item men">
+                  <div class="product discount product_filter">
+                    <div class="product_image">
+                      <img src="{{ item.image.url }}" alt="">
+                    </div>
+                    {% if item.discount_price %}
+                    <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
+                      <span class="uppercase">SALE</span>
+                    </div>
+                    {% endif %}
+                    <div class="product_info">
+                      <h6 class="product_name"><a href="{% url 'core:product' item.slug %}">{{ item.title }}</a>
+                      </h6>
+                      {% if item.discount_price %}
+                      <div class="product_price">${{ item.discount_price }}<span>${{ item.price }}</span></div>
+                      {% else %}
+                      <div class="product_price">${{ item.price }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="red_button add_to_cart_button"><a href="{{ item.get_add_to_cart_url }}">add to cart</a></div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-5">
+          <div class="col-lg-12 m-auto">
+            <nav>
+              <ul class="pagination justify-content-center">
+                  {% if is_paginated %}
+                      {% if page_obj.has_previous %}
+                          <li class="page-item">
+                              <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">«</span></a>
+                          </li>
+                      {% endif %}
+                      {% for num in page_obj.paginator.page_range %}
+                          {% if page_obj.number == num %}
+                              <li class="page-item active"><a class="page-link bg-danger" href="?page={{ num }}">{{ num }}</a></li>
+                          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                              <li class="page-item active"><a class="page-link bg-danger" href="?page={{ num }}">{{ num }}</a></li>
+                          {% endif %}
+                      {% endfor %}
+                      {% if page_obj.has_next %}
+                          <li class="page-item">
+                              <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">»</span></a>
+                          </li>
+                      {% endif %}
+                  {% endif %}
+              </ul>
+            </nav>
+          </div>
+          
+        </div>
+        
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+
+{% include 'core/assets/benefits.html' %}
+{% include 'core/assets/newsletter.html' %}
+{% endblock content %}
+
+{% block extrascripts %}
+<script src="{% static 'core/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'core/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+<script src="{% static 'core/js/categories_custom.js' %}"></script>
+{% endblock extrascripts %}

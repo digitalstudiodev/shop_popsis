@@ -1,34 +1,61 @@
 {% extends "core/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
-{% block head_title %}
+{% block title %}
 Register
-{% endblock %}
+{% endblock title %}
+
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'core/plugins/themify-icons/themify-icons.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/single_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/single_responsive.css' %}">
+{% endblock extrastyle %}
+
+
+
+
 {% block content %}
-<main class="mt-5 pt-5">
-  <div class="container py-5">
-    {% include 'core/messages.html' %}
-    <section class="mb-4">
-      <div class="row wow fadeIn">
-        <div class="col-6 offset-3">
-            <h1>Register</h1>
-            <p>
-              If you have created an account already, then please <a href="{% url 'users:login' %}">login</a>
-            </p>
-            <form class="login" method="POST">
-              {% csrf_token %}
-              {{ form|crispy }}
-              <button class="btn btn-lg btn-warning" style="border-radius: 2rem;" type="submit">Register</button>
-              <!--<a class="text-muted" href="#">Login</a>-->
-            </form>
-        </div>
+<div class="container single_product_container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="breadcrumbs d-flex flex-row align-items-center">
+        <ul>
+          <li class="active"><a href="javascirpt:void(0);">Account</a></li>
+          <li class="active"><a href="javascirpt:void(0);"><i class="fa fa-angle-right"
+                aria-hidden="true"></i>Register</a>
+          </li>
+        </ul>
       </div>
-    </section>
+    </div>
   </div>
-</main>
-{% endblock %}
-{% block extra_scripts %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-{% endblock extra_scripts %}
+  {% include 'core/assets/messages.html' %}
+  <div class="row">
+    <div class="col-6 m-auto">
+      <h3>Register</h3>
+      <p>
+        If you have created an account already, then please <a href="{% url 'users:login' %}">sign in</a>
+      </p>
+      <form class="login" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn text-white btn-warning" type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block extrascripts %}
+<script src="{% static 'core/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'core/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+<script src="{% static 'core/js/single_custom.js' %}"></script>
+{% endblock extrascripts %}

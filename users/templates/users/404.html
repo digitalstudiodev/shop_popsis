@@ -1,0 +1,56 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+
+{% block title %}
+Error
+{% endblock title %}
+
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'core/plugins/themify-icons/themify-icons.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/single_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/single_responsive.css' %}">
+{% endblock extrastyle %}
+
+
+{% block content %}
+<div class="container single_product_container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="breadcrumbs d-flex flex-row align-items-center">
+        <ul>
+          <li class="active"><a href="javascirpt:void(0);">Support</a></li>
+          <li class="active"><a href="javascirpt:void(0);"><i class="fa fa-angle-right" aria-hidden="true"></i>Error</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% include 'core/assets/messages.html' %}
+  <div class="row">
+    <div class="col-6 m-auto">
+      <h3>Error</h3>
+      <p>An error occured</p>
+      <div class="border-top pt-3">
+        <small class="text-muted">
+          <a href="{% url 'core:home' %}">Back Home</a>
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block extrascripts %}
+<script src="{% static 'core/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'core/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+<script src="{% static 'core/js/single_custom.js' %}"></script>
+{% endblock extrascripts %}

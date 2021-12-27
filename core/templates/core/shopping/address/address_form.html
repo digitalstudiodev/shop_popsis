@@ -1,0 +1,41 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% if object.shipping_address %}
+    {% if object.items.all.count > 0 %}
+    <div class="col-md-12 mb-4">
+        <!--cart count-->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Shipping Address</span>
+            
+        </h4>
+        <p>
+            Currently: {{ object.shipping_address.street_address }} <br>
+            {{ object.shipping_address.apartment_address }},
+            {{ object.shipping_address.city }},
+            {{ object.shipping_address.state }},
+            {{ object.shipping_address.zip_code }}
+        </p>
+        <!--address form-->
+        <form class="card p-2" action="{% url 'core:add-address' %}" method="POST">
+            {% csrf_token %}
+            {{ addressform|crispy }}
+            <button class="btn btn-warning text-white m-0" type="submit">Add</button>
+        </form>
+    </div>
+    {% endif %}
+{% else %}
+    {% if object.items.all.count > 0 %}
+    <div class="col-md-12 mb-4">
+        <!--cart count-->
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Shipping Address</span>
+        </h4>
+        <!--address form-->
+        <form class="card p-2" action="{% url 'core:add-address' %}" method="POST">
+            {% csrf_token %}
+            {{ addressform|crispy }}
+            <button class="btn btn-warning text-white m-0" type="submit">Add</button>
+        </form>
+    </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,145 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+My Order
+{% endblock title %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'core/plugins/themify-icons/themify-icons.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/single_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/styles/single_responsive.css' %}">
+{% endblock extrastyle %}
+
+{% block content %}
+<div class="container single_product_container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="{% url 'core:order-summary' %}">Order</a></li>
+                    <li class="active"><a href="javascirpt:void(0);"><i class="fa fa-angle-right" aria-hidden="true"></i>Summary</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include 'core/assets/messages.html' %}
+    <div class="row">
+        <div class="col-xl-8 m-auto">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Order</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="container py-5">
+                    <h6>Reference Code&nbsp;&nbsp;&nbsp;&nbsp;{{ object.ref_code }}</h6>
+                    {% if order.shipping_address %}
+                    <h6>Shipping Address&nbsp;&nbsp;&nbsp;&nbsp;{{ object.shipping_address.street_address }},
+                        {{ object.shipping_address.apartment_address }},
+                        {{ object.shipping_address.city }},
+                        {{ object.shipping_address.state }},
+                        {{ object.shipping_address.zip_code }}
+                    </h6>
+                    {% else %}
+                    <h6>No Shipping Address Included</h6>
+                    {% endif %}
+                    <h6>Ordered&nbsp;&nbsp;&nbsp;&nbsp;{{ object.ordered_date }}</h6>
+                    <h6 class="mb-5">
+                        Status&nbsp;&nbsp;&nbsp;&nbsp;
+                        {{ object.status }}
+                    </h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order_item in object.items.all %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>
+                                    <a href="{% url 'dashboard:item-detail' order_item.item.id %}">
+                                        <img src="{{ order_item.item.image.url }}" class="img-fluid" alt="" width="5%" height="5%">
+                                        &nbsp;&nbsp;
+                                        {{ order_item.item.title }}
+                                    </a>
+                                </td>
+                                <td>{{ order_item.item.price }}</td>
+                                <td>
+                                    {{ order_item.quantity }}
+                                </td>
+                                <td>
+                                    {% if order_item.item.discount_price %}
+                                    ${{ order_item.get_total_discount_item_price }}
+                                    <span class="badge badge-primary hide">-&nbsp;${{ order_item.get_amount_saved }}</span>
+                                    {% else %}
+                                    ${{ order_item.get_total_item_price }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            {% endfor %}
+                            {% if object.coupon %}
+                                {% for coupon in object.coupon.all %}
+                                <tr>
+                                    <td colspan="4"><b>Coupon</b>&nbsp;~&nbsp;{{ coupon.code }}</td>
+                                    <td><b>-${{ coupon.amount }}</b></td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
+                            {% if object.get_total %}
+                            <tr>
+                                <td colspan="4"><b>Subtotal</b></td>
+                                <td><b>${{ object.get_total }}</b></td>
+                            </tr>
+                            {% endif %}
+                            {% if object.shipping %}
+                            <tr>
+                                <td colspan="4"><b>Shipping</b></td>
+                                <td><b>${{ object.shipping }}</b></td>
+                            </tr>
+                            {% endif %}
+                            {% if object.tax_total %}
+                            <tr>
+                                <td colspan="4"><b>Processing Fee</b></td>
+                                <td><b>${{ object.tax_total }}</b></td>
+                            </tr>
+                            {% endif %}
+                            {% if object.payment %}
+                            <tr>
+                                <td colspan="4"><b>Total</b></td>
+                                <td><b>${{ object.payment.amount }}</b></td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    <a class="btn btn-dark" href="{% url 'users:profile' %}">Back</a>
+                </div>
+    
+            </div>
+    
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block extrascripts %}
+<script src="{% static 'core/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'core/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'core/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'core/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'core/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+<script src="{% static 'core/js/single_custom.js' %}"></script>
+{% endblock extrascripts %}

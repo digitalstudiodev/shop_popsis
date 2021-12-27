@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>
+    {% block title %}
+    {% endblock title %}
+  </title>
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'dash/assets/img/brand/favicon.png' %}" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="{% static 'dash/assets/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'dash/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}"
+    type="text/css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="{% static 'dash/assets/css/argon.css' %}" type="text/css">
+</head>
+
+<body>
+  <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header  align-items-center">
+        <a class="navbar-brand" href="{% url 'dashboard:dashboard' %}">
+          <img src="{% static 'core/images/popsis_logo.png' %}" class="navbar-brand-img" alt="Popsis logo">
+        </a>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          {% block nav_links %}
+          {% endblock nav_links %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-yellow border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="{% url 'dashboard:dashboard' %}" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle">
+                    <img alt="Image placeholder" src="{{ user.profile.image.url }}">
+                  </span>
+                  <div class="media-body  ml-2  d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">{{ user.email }}</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Admin</h6>
+                </div>
+                <a href="{% url 'dashboard:profile' %}" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>Admin</span>
+                </a>
+                <a href="{% url 'dashboard:profile-update' %}" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>Update Admin</span>
+                </a>
+                <a href="{% url 'core:home' %}" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>Store Home</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'users:logout' %}" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Sign Out</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Header -->
+    {% block header %}
+    {% endblock header %}
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      {% block content %}
+      {% endblock content %}
+      <!-- Footer -->
+      <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+              &copy; 2020 <a href="{% url 'core:home' %}" class="font-weight-bold ml-1 text-muted text-dark">Popsis</a>.
+              Developed by <a href="https://digitalstudio.dev/" class="text-muted text-dark" target="_blank">Digital
+                Studio</a>.
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="{% url 'core:home' %}" class="nav-link">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'core:shop-catalog' %}" class="nav-link">Shop</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'core:contact' %}" class="nav-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="{% static 'dash/assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'dash/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'dash/assets/vendor/js-cookie/js.cookie.js' %}"></script>
+  <script src="{% static 'dash/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
+  <script src="{% static 'dash/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
+  <!-- Optional JS -->
+  <script src="{% static 'dash/assets/vendor/chart.js/dist/Chart.min.js' %}"></script>
+  <script src="{% static 'dash/assets/vendor/chart.js/dist/Chart.extension.js' %}"></script>
+  <!-- Argon JS -->
+  <script src="{% static 'dash/assets/js/argon.js?v=1.2.0' %}"></script>
+</body>
+
+</html>

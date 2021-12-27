@@ -18,6 +18,10 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['email']
 
 class ProfileUpdateForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Choose Image',
+    }))
     class Meta:
         model = Profile
         fields = ['image']

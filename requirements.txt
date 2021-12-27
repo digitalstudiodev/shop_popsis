@@ -1,5 +1,4 @@
 boto3==1.20.26
-botocore==1.23.26
 Django==4.0
 django-allauth==0.47.0
 django-countries==7.2.1
@@ -11,7 +10,6 @@ docutils==0.15.2
 gunicorn==20.1.0
 Pillow==8.4.0
 psycopg2==2.9.2
-requests==2.20.1
 stripe==2.64.0
 user-agents==2.2.0
 whitenoise==4.1.3

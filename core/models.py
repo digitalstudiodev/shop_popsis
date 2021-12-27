@@ -64,7 +64,7 @@ STATES = (
 
 
 
-class Category(models.Model):
+class CategoryChoice(models.Model):
     category_choice = models.CharField(max_length=100, verbose_name="Category Choice")
     image = models.ImageField(blank=False, null=False, verbose_name="Category Image", default="default.png", upload_to='category_pics')
 
@@ -78,7 +78,7 @@ class Item(models.Model):
     title = models.CharField(max_length=100, verbose_name="Item Name")
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True, verbose_name="Discounted Price")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(CategoryChoice, on_delete=models.CASCADE, blank=True, null=True)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1, default="", verbose_name="Labeled Color")
     slug = models.SlugField(default="", verbose_name="Item Tag", help_text="This text will be used in url. Please use following format: Item-Name-Tag")
     description = models.TextField(default="")

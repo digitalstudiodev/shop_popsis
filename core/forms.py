@@ -1,5 +1,5 @@
 from django import forms
-from core.models import Category
+from core.models import CategoryChoice
 from users.models import User
 from core.models import Item, Address
 
@@ -42,7 +42,7 @@ class AddressForm(forms.ModelForm):
             visible.field.widget.attrs['class'] = 'form-control'
 
 class CategoryForm(forms.Form):
-    category_choice = forms.ModelChoiceField(queryset = Category.objects.all(), required=False)
+    category_choice = forms.ModelChoiceField(queryset = CategoryChoice.objects.all(), required=False)
 
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)

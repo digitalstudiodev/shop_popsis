@@ -9,7 +9,7 @@ from django.views.generic import ListView, DetailView, View,CreateView, UpdateVi
 from django.utils import timezone
 from django.views.generic.base import TemplateView
 from .forms import AddressForm, CouponForm, RefundForm, PaymentForm, UserUpdateForm, CategoryForm
-from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Category, Address
+from .models import Item, OrderItem, Order, Payment, Coupon, Refund, CategoryChoice, Address
 from users.models import User, Profile
 import random
 import string
@@ -36,7 +36,7 @@ def is_valid_form(values):
 def home(request):
     context = {
         'items': Item.objects.all()[:16],
-        'categories': Category.objects.all()
+        'categories': CategoryChoice.objects.all()
     }
     return render(request, "core/home.html", context)
 

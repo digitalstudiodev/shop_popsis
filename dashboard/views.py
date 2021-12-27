@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from core.models import Order, Item, Coupon, Category, Payment
+from core.models import Order, Item, Coupon, CategoryChoice, Payment
 from django.contrib import messages
 from users.models import User
 from users.forms import UserUpdateForm, ProfileUpdateForm
@@ -16,7 +16,7 @@ def dashboard(request):
     orders = Order.objects.all()
     items = Item.objects.all()
     coupons = Coupon.objects.all()
-    categories = Category.objects.all()
+    categories = CategoryChoice.objects.all()
     payments = Payment.objects.all()
     # new users and all users
     todays_date = date.today()
@@ -185,10 +185,10 @@ class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     template_name = "dashboard/category/category_detail.html"
-    model = Category
+    model = CategoryChoice
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
-    model = Category
+    model = CategoryChoice
     template_name = 'dashboard/category/category_form.html'
     fields = [
        'category_choice', 'image'
@@ -200,7 +200,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Category
+    model = CategoryChoice
     template_name = "dashboard/category/category_form.html"
     fields = [
         'category_choice', 'image'
@@ -218,7 +218,7 @@ class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Category
+    model = CategoryChoice
     template_name = "dashboard/category/category_confirm_delete.html"
     success_url = '/dashboard/dashboard/'
 

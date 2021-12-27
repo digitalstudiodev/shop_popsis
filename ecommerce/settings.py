@@ -26,7 +26,7 @@ SECRET_KEY =os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['popsis.herokuapp.com','*','localhost/','https://www.shoppopsis.com/','http://www.shoppopsis.com/']
+ALLOWED_HOSTS = ['https://www.shoppopsis.com/','https://popsis.herokuapp.com']
 
 # Application definition
 

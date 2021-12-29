@@ -131,7 +131,7 @@ class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Item
-    success_url = '/management/dashboard/'
+    success_url = '/dashboard/'
 
     def test_func(self):
         if self.request.user.is_admin:
@@ -194,7 +194,7 @@ class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class CouponDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Coupon
     template_name = 'dashboard/coupon/coupon_confirm_delete.html'
-    success_url = '/management/dashboard/'
+    success_url = '/dashboard/'
 
     def test_func(self):
         if self.request.user.is_admin:
@@ -286,7 +286,7 @@ class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = CategoryChoice
     template_name = "dashboard/category/category_confirm_delete.html"
-    success_url = '/management/dashboard/'
+    success_url = '/dashboard/'
 
     def test_func(self):
         if self.request.user.is_admin:

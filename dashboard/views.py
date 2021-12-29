@@ -15,51 +15,55 @@ from user_visit.models import UserVisit
 
 class DashboardView(LoginRequiredMixin, UserPassesTestMixin, View):
     def get(self, *args, **kwargs):
-        orders = Order.objects.all()
-        items = Item.objects.all()
-        coupons = Coupon.objects.all()
-        categories = CategoryChoice.objects.all()
-        payments = Payment.objects.all()
-        # new users and all users
-        todays_date = date.today()
-        all_users = User.objects.all()
-        new_users = []
-        for user in all_users:
-            if todays_date.month == user.date_joined.date().month:
-                new_users.append(user)
-        # traffic
-        user_visits = UserVisit.objects.all()
-        new_visits = []
-        for visit in user_visits:
-            if todays_date.month == visit.timestamp.month:
-                new_visits.append(visit)
-        # sales
-        new_payments = []
-        for payment in payments:
-            if todays_date.month == payment.timestamp.month:
-                new_payments.append(payment)
-        # performance
-        new_perf = []
-        overall_perf = []
-        for payment in payments:
-            overall_perf.append(payment.amount)
-            if todays_date.month == payment.timestamp.month:
-                new_perf.append(payment.amount)
-        context = {
-            'items': items,
-            'orders': orders,
-            'coupons': coupons,
-            'categories': categories,
-            'payments': payments,
-            'newUsers': int(len(new_users)),
-            'allUsers': int(len(all_users)),
-            'allTraffic': int(len(user_visits)),
-            'newTraffic': int(len(new_visits)),
-            'allSales': int(len(payments)),
-            'newSales': int(len(new_payments)),
-            'totalPerformance': float(sum(overall_perf)),
-            'newPerformance': float(sum(new_perf)),
-        }
+        try :
+            orders = Order.objects.all()
+            items = Item.objects.all()
+            coupons = Coupon.objects.all()
+            categories = CategoryChoice.objects.all()
+            payments = Payment.objects.all()
+            # new users and all users
+            todays_date = date.today()
+            all_users = User.objects.all()
+            new_users = []
+            for user in all_users:
+                if todays_date.month == user.date_joined.date().month:
+                    new_users.append(user)
+            # traffic
+            user_visits = UserVisit.objects.all()
+            new_visits = []
+            for visit in user_visits:
+                if todays_date.month == visit.timestamp.month:
+                    new_visits.append(visit)
+            # sales
+            new_payments = []
+            for payment in payments:
+                if todays_date.month == payment.timestamp.month:
+                    new_payments.append(payment)
+            # performance
+            new_perf = []
+            overall_perf = []
+            for payment in payments:
+                overall_perf.append(payment.amount)
+                if todays_date.month == payment.timestamp.month:
+                    new_perf.append(payment.amount)
+            context = {
+                'items': items,
+                'orders': orders,
+                'coupons': coupons,
+                'categories': categories,
+                'payments': payments,
+                'newUsers': int(len(new_users)),
+                'allUsers': int(len(all_users)),
+                'allTraffic': int(len(user_visits)),
+                'newTraffic': int(len(new_visits)),
+                'allSales': int(len(payments)),
+                'newSales': int(len(new_payments)),
+                'totalPerformance': float(sum(overall_perf)),
+                'newPerformance': float(sum(new_perf)),
+            }
+        except:
+            messages.error(self.request, 'No data inserted, start to create your inventory and system by selecting the options on the left navigation bar.')
+            context = {}
         return render(self.request, "dashboard/dashboard.html", context)
 
     def test_func(self):

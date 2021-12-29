@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls', namespace='core')),
     path('users/', include('users.urls', namespace='users')),
-    path('management/', include('dashboard.urls', namespace='dashboard')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     #reset password
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name="users/password_reset/password_reset.html"), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="users/password_reset/password_reset_done.html"), name='password_reset_done'),

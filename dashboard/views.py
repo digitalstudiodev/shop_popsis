@@ -67,7 +67,6 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, View):
         return render(self.request, "dashboard/dashboard.html", context)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:

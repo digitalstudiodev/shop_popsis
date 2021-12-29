@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, render
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from core.models import Order, Item, Coupon, CategoryChoice, Payment
@@ -13,7 +13,7 @@ from datetime import date
 from user_visit.models import UserVisit
 
 
-class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+class DashboardView(LoginRequiredMixin, UserPassesTestMixin, View):
     def get(self, *args, **kwargs):
         orders = Order.objects.all()
         items = Item.objects.all()
@@ -45,8 +45,6 @@ class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             overall_perf.append(payment.amount)
             if todays_date.month == payment.timestamp.month:
                 new_perf.append(payment.amount)
-
-
         context = {
             'items': items,
             'orders': orders,

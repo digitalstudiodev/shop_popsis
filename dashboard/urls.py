@@ -4,7 +4,7 @@ import dashboard.views as dash_view
 app_name = 'dashboard'
 
 urlpatterns = [
-    path('/', dash_view.DashboardView.as_view(), name='dashboard'),
+    path('', dash_view.DashboardView.as_view(), name='dashboard'),
     # inventory paths
     path('item/new/', dash_view.ItemCreateView.as_view(), name='item-create'),
     path('item/<int:pk>/', dash_view.ItemDetailView.as_view(), name='item-detail'),

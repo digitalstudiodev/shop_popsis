@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, render
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from core.models import Order, Item, Coupon, CategoryChoice, Payment
@@ -11,62 +12,79 @@ from users.forms import UserUpdateForm, ProfileUpdateForm
 from datetime import date
 from user_visit.models import UserVisit
 
-@login_required(login_url='users:login')
-def dashboard(request):
-    orders = Order.objects.all()
-    items = Item.objects.all()
-    coupons = Coupon.objects.all()
-    categories = CategoryChoice.objects.all()
-    payments = Payment.objects.all()
-    # new users and all users
-    todays_date = date.today()
-    all_users = User.objects.all()
-    new_users = []
-    for user in all_users:
-        if todays_date.month == user.date_joined.date().month:
-            new_users.append(user)
-    # traffic
-    user_visits = UserVisit.objects.all()
-    new_visits = []
-    for visit in user_visits:
-        if todays_date.month == visit.timestamp.month:
-            new_visits.append(visit)
-    # sales
-    new_payments = []
-    for payment in payments:
-        if todays_date.month == payment.timestamp.month:
-            new_payments.append(payment)
-    # performance
-    new_perf = []
-    overall_perf = []
-    for payment in payments:
-        overall_perf.append(payment.amount)
-        if todays_date.month == payment.timestamp.month:
-            new_perf.append(payment.amount)
+
+class DashboardView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    def get(self, *args, **kwargs):
+        orders = Order.objects.all()
+        items = Item.objects.all()
+        coupons = Coupon.objects.all()
+        categories = CategoryChoice.objects.all()
+        payments = Payment.objects.all()
+        # new users and all users
+        todays_date = date.today()
+        all_users = User.objects.all()
+        new_users = []
+        for user in all_users:
+            if todays_date.month == user.date_joined.date().month:
+                new_users.append(user)
+        # traffic
+        user_visits = UserVisit.objects.all()
+        new_visits = []
+        for visit in user_visits:
+            if todays_date.month == visit.timestamp.month:
+                new_visits.append(visit)
+        # sales
+        new_payments = []
+        for payment in payments:
+            if todays_date.month == payment.timestamp.month:
+                new_payments.append(payment)
+        # performance
+        new_perf = []
+        overall_perf = []
+        for payment in payments:
+            overall_perf.append(payment.amount)
+            if todays_date.month == payment.timestamp.month:
+                new_perf.append(payment.amount)
 
 
-    context = {
-        'items': items,
-        'orders': orders,
-        'coupons': coupons,
-        'categories': categories,
-        'payments': payments,
-        'newUsers': int(len(new_users)),
-        'allUsers': int(len(all_users)),
-        'allTraffic': int(len(user_visits)),
-        'newTraffic': int(len(new_visits)),
-        'allSales': int(len(payments)),
-        'newSales': int(len(new_payments)),
-        'totalPerformance': float(sum(overall_perf)),
-        'newPerformance': float(sum(new_perf)),
-    }
-    return render(request, "dashboard/dashboard.html", context)
+        context = {
+            'items': items,
+            'orders': orders,
+            'coupons': coupons,
+            'categories': categories,
+            'payments': payments,
+            'newUsers': int(len(new_users)),
+            'allUsers': int(len(all_users)),
+            'allTraffic': int(len(user_visits)),
+            'newTraffic': int(len(new_visits)),
+            'allSales': int(len(payments)),
+            'newSales': int(len(new_payments)),
+            'totalPerformance': float(sum(overall_perf)),
+            'newPerformance': float(sum(new_perf)),
+        }
+        return render(self.request, "dashboard/dashboard.html", context)
 
-class ItemDetailView(LoginRequiredMixin, DetailView):
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
+        
+class ItemDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     template_name = "dashboard/item/item_detail.html"
     model = Item
 
-class ItemCreateView(LoginRequiredMixin, CreateView):
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
+
+class ItemCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Item
     template_name = 'dashboard/item/item_form.html'
     fields = [
@@ -80,6 +98,14 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         form.instance.slug = item_title.replace(" ", "-")
         messages.success(self.request, f'You have successfully added a new item')
         return super().form_valid(form)
+    
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 
 class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -99,21 +125,25 @@ class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.is_superuser:
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Item
-    success_url = '/dashboard/dashboard/'
+    success_url = '/management/dashboard/'
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.is_superuser:
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
-class CouponCreateView(LoginRequiredMixin, CreateView):
+class CouponCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Coupon
     template_name = 'dashboard/coupon/coupon_form.html'
     fields = [
@@ -126,9 +156,25 @@ class CouponCreateView(LoginRequiredMixin, CreateView):
         messages.success(self.request, f'You have successfully added a new coupon')
         return super().form_valid(form)
 
-class CouponDetailView(DetailView):
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
+
+class CouponDetailView(DetailView, UserPassesTestMixin):
     template_name = 'dashboard/coupon/coupon_detail.html'
     model = Coupon
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Coupon
@@ -145,24 +191,36 @@ class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.is_superuser:
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 class CouponDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Coupon
     template_name = 'dashboard/coupon/coupon_confirm_delete.html'
-    success_url = '/dashboard/dashboard/'
+    success_url = '/management/dashboard/'
 
     def test_func(self):
-        coupon = self.get_object()
-        if self.request.user.is_superuser:
+        item = self.get_object()
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
-class OrderDetailView(DetailView):
+class OrderDetailView(DetailView, UserPassesTestMixin):
     model = Order
     template_name = "dashboard/order/order_detail.html"
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Order
@@ -178,16 +236,26 @@ class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.is_superuser:
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
     
 
-class CategoryDetailView(LoginRequiredMixin, DetailView):
+class CategoryDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     template_name = "dashboard/category/category_detail.html"
     model = CategoryChoice
 
-class CategoryCreateView(LoginRequiredMixin, CreateView):
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
+
+class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = CategoryChoice
     template_name = 'dashboard/category/category_form.html'
     fields = [
@@ -198,6 +266,14 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         category = str(form.instance.category_choice)
         messages.success(self.request, f'You have successfully added a new item')
         return super().form_valid(form)
+
+    def test_func(self):
+        item = self.get_object()
+        if self.request.user.is_admin:
+            return True
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = CategoryChoice
@@ -213,20 +289,24 @@ class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.is_superuser:
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = CategoryChoice
     template_name = "dashboard/category/category_confirm_delete.html"
-    success_url = '/dashboard/dashboard/'
+    success_url = '/management/dashboard/'
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.is_superuser:
+        if self.request.user.is_admin:
             return True
-        return False
+        else:
+            messages.error(self.request, 'You do not have access to this page, please do not attempt without contacting Digital Studio for access.')
+            return False
 
 @login_required(login_url='users:login')
 def profile_update(request):

@@ -356,7 +356,7 @@ def create_checkout_session(request):
                 currency= "usd",
             )
             if request.method == 'GET':
-                domain_url = settings.ALLOWED_HOSTS[0]
+                domain_url = settings.ALLOWED_HOSTS[1]
                 stripe.api_key = settings.STRIPE_SECRET_KEY
                 try:
                     if order.coupon:
@@ -379,7 +379,7 @@ def create_checkout_session(request):
                 return redirect(checkout_session.url, code=303)
         else:
             if request.method == 'GET':
-                domain_url = settings.ALLOWED_HOSTS[0]
+                domain_url = settings.ALLOWED_HOSTS[1]
                 stripe.api_key = settings.STRIPE_SECRET_KEY
                 try:
                     if order.coupon:

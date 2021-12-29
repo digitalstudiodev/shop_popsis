@@ -78,7 +78,6 @@ class ItemDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Item
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -101,7 +100,6 @@ class ItemCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
     
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -125,7 +123,6 @@ class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -137,7 +134,6 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = '/management/dashboard/'
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -158,7 +154,6 @@ class CouponCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -170,7 +165,6 @@ class CouponDetailView(DetailView, UserPassesTestMixin):
     model = Coupon
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -191,7 +185,6 @@ class CouponUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -204,7 +197,6 @@ class CouponDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = '/management/dashboard/'
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -216,7 +208,6 @@ class OrderDetailView(DetailView, UserPassesTestMixin):
     template_name = "dashboard/order/order_detail.html"
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -236,7 +227,6 @@ class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return redirect('dashboard:order-detail', self.get_object().id)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -249,7 +239,6 @@ class CategoryDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = CategoryChoice
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -269,7 +258,6 @@ class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -289,7 +277,6 @@ class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:
@@ -302,7 +289,6 @@ class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = '/management/dashboard/'
 
     def test_func(self):
-        item = self.get_object()
         if self.request.user.is_admin:
             return True
         else:

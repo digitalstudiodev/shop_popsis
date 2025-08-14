@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    # Add these allauth apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'core.apps.CoreConfig',
     'crispy_forms',
     'storages',

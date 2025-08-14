@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY =os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #os.environ.get('DEBUG')
+DEBUG = True #os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['https://popsis.herokuapp.com','https://www.shoppopsis.com/','www.shoppopsis.com','shoppopsis.com','popsis.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -193,6 +193,9 @@ STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
+if DEBUG:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 django_heroku.settings(locals())
 # Digital Studio Dev

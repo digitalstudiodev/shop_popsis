@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     # Add these allauth apps
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     'core.apps.CoreConfig',
     'crispy_forms',
     'storages',
